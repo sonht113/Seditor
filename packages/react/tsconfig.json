@@ -1,0 +1,9 @@
+{
+  "extends": "@seditor/tsconfig/react.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": ["react", "react-dom"]
+  },
+  "include": ["src"]
+}

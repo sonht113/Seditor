@@ -1,0 +1,85 @@
+{
+  "name": "seditor",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Seditor — a beautiful, lightweight, framework-agnostic rich text editor built on Lexical.",
+  "license": "MIT",
+  "packageManager": "pnpm@11.5.2",
+  "engines": {
+    "node": ">=20"
+  },
+  "size-limit": [
+    {
+      "name": "@seditor/editor-core",
+      "path": "packages/core/dist/index.js",
+      "limit": "31 KB",
+      "gzip": true,
+      "ignore": [
+        "lexical",
+        "@lexical/history",
+        "@lexical/html",
+        "@lexical/link",
+        "@lexical/list",
+        "@lexical/rich-text",
+        "@lexical/selection"
+      ]
+    },
+    {
+      "name": "@seditor/editor-react",
+      "path": "packages/react/dist/index.js",
+      "limit": "10 KB",
+      "gzip": true,
+      "ignore": [
+        "lexical",
+        "react",
+        "react-dom",
+        "@seditor/editor-core"
+      ]
+    },
+    {
+      "name": "@seditor/editor-theme",
+      "path": "packages/theme-default/dist/index.css",
+      "limit": "5 KB",
+      "gzip": true
+    },
+    {
+      "name": "@seditor/plugin-image",
+      "path": "packages/plugin-image/dist/index.js",
+      "limit": "5 KB",
+      "gzip": true,
+      "ignore": [
+        "lexical",
+        "@seditor/editor-core"
+      ]
+    }
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "size": "size-limit",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.1",
+    "@eslint/js": "^9.0.0",
+    "@seditor/tsconfig": "workspace:*",
+    "@size-limit/preset-small-lib": "^13.0.3",
+    "eslint": "^9.0.0",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "prettier": "^3.3.0",
+    "size-limit": "^13.0.3",
+    "turbo": "^2.0.0",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^2.0.0"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "@seditor/editor-theme",
+  "version": "0.0.0",
+  "description": "Default Notion-like theme for Seditor (CSS variables).",
+  "license": "MIT",
+  "sideEffects": [
+    "*.css"
+  ],
+  "style": "./dist/index.css",
+  "exports": {
+    ".": {
+      "style": "./dist/index.css",
+      "default": "./dist/index.css"
+    },
+    "./dark": {
+      "style": "./dist/dark.css",
+      "default": "./dist/dark.css"
+    },
+    "./dark.css": {
+      "style": "./dist/dark.css",
+      "default": "./dist/dark.css"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "clean": "rm -rf dist .turbo"
+  },
+  "devDependencies": {
+    "@seditor/tsconfig": "workspace:*",
+    "vite": "^5.4.0"
+  }
+}

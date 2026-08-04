@@ -1,0 +1,4 @@
+{
+  "extends": "@seditor/tsconfig/base.json",
+  "include": ["src"]
+}

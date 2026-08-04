@@ -1,0 +1,33 @@
+/* Seditor dark theme — applies dark --se-* variables.
+   Activated via [data-se-theme="dark"] on <html>, or via prefers-color-scheme
+   when no explicit theme attribute is set. */
+
+[data-se-theme="dark"] {
+  --se-color-bg: #2f3437;
+  --se-color-text: #d8d8d6;
+  --se-color-text-muted: #9b9a97;
+  --se-color-border: #4a4f52;
+  --se-color-hover: rgba(255, 255, 255, 0.055);
+  --se-color-active: rgba(255, 255, 255, 0.11);
+  --se-color-primary: #5b9ff5;
+  --se-color-link: #5b9ff5;
+  --se-color-selection: rgba(91, 159, 245, 0.25);
+  --se-color-surface: #383d3f;
+  --se-color-shadow: rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-se-theme="light"]) {
+    --se-color-bg: #2f3437;
+    --se-color-text: #d8d8d6;
+    --se-color-text-muted: #9b9a97;
+    --se-color-border: #4a4f52;
+    --se-color-hover: rgba(255, 255, 255, 0.055);
+    --se-color-active: rgba(255, 255, 255, 0.11);
+    --se-color-primary: #5b9ff5;
+    --se-color-link: #5b9ff5;
+    --se-color-selection: rgba(91, 159, 245, 0.25);
+    --se-color-surface: #383d3f;
+    --se-color-shadow: rgba(0, 0, 0, 0.4);
+  }
+}

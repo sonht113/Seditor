@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["20"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm size
+      - name: Guardrail — core must not depend on react
+        run: |
+          if grep -E '"react"|"@lexical/react"' packages/core/package.json; then
+            echo "FAIL: core depends on react"
+            exit 1
+          fi
+          if grep -rE "from ['\"](react|@lexical/react)" packages/core/src; then
+            echo "FAIL: core source imports react"
+            exit 1
+          fi
+          echo "OK: core is react-free"

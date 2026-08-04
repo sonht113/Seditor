@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+build
+.turbo
+*.tsbuildinfo
+*.timestamp-*.mjs
+
+# Test
+coverage
+
+# Editor / OS
+.DS_Store
+*.log
+.env
+.env.local
+
+# Tooling (local, not committed)
+.codegraph/
+.opencode/
+.mcp.json
+opencode.json
+
+# Planning docs (internal)
+Plan.md
+Plan-final.md
