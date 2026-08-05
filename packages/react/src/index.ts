@@ -1,5 +1,5 @@
 export { Editor, useEditor } from "./Editor";
-export type { EditorProps } from "./Editor";
+export type { EditorProps, EditorValueFormat } from "./Editor";
 export { Toolbar } from "./Toolbar";
 export type { ToolbarProps } from "./Toolbar";
 export { defaultToolbarItems } from "./defaultToolbar";
