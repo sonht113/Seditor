@@ -23,4 +23,5 @@ coverage
 .opencode/
 .mcp.json
 opencode.json
+.commandcode/
 
