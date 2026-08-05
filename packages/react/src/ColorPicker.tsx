@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getPendingTextColor, getPendingBgColor } from "@seditor/editor-core";
+import { getPendingTextColor, getPendingBgColor } from "seditor-core";
 import { useEditor } from "./Editor";
 
 const TEXT_COLORS: Array<{ label: string; value: string | null }> = [

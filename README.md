@@ -3,7 +3,7 @@
 > A beautiful, lightweight, framework-agnostic rich text editor built on [Lexical](https://lexical.dev). 100% MIT.
 
 [![CI](https://github.com/seditor/seditor/actions/workflows/ci.yml/badge.svg)](https://github.com/seditor/seditor/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/@seditor/editor-react.svg)](https://www.npmjs.com/package/@seditor/editor-react)
+[![npm](https://img.shields.io/npm/v/seditor-react.svg)](https://www.npmjs.com/package/seditor-react)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Seditor is a Notion-like, easy-to-configure rich text editor. The core is
@@ -14,7 +14,7 @@ a default theme. Vue and Svelte bindings are planned.
 
 - **Beautiful by default** — Notion-like typography and a clean toolbar out of the box.
 - **Lightweight** — core is ~35 KB gzip (excluding the Lexical peer).
-- **Framework-agnostic core** — `@seditor/editor-core` has zero React dependency. Build your own bindings.
+- **Framework-agnostic core** — `seditor-core` has zero React dependency. Build your own bindings.
 - **Config as data** — toolbar and config are plain objects, not JSX children.
 - **CSS variables theming** — dark mode is a variable override, not a class swap.
 - **100% MIT** — no premium-gated features.
@@ -22,7 +22,7 @@ a default theme. Vue and Svelte bindings are planned.
 ## Install
 
 ```bash
-npm install @seditor/editor-react @seditor/editor-theme
+npm install seditor-react seditor-theme
 ```
 
 Peer dependencies: `react`, `react-dom`, `lexical`.
@@ -30,9 +30,9 @@ Peer dependencies: `react`, `react-dom`, `lexical`.
 ## Quick start
 
 ```tsx
-import { Editor, Toolbar } from "@seditor/editor-react";
-import "@seditor/editor-theme/index.css";
-import "@seditor/editor-theme/dark.css";
+import { Editor, Toolbar } from "seditor-react";
+import "seditor-theme/index.css";
+import "seditor-theme/dark.css";
 
 export function App() {
   return (
@@ -51,15 +51,15 @@ export function App() {
 
 | Package                 | Description                                            | Size (gzip) |
 | ----------------------- | ------------------------------------------------------ | ----------- |
-| `@seditor/editor-core`  | Framework-agnostic core (Lexical wrapper + commands)   | ~35 KB      |
-| `@seditor/editor-react` | React bindings: `<Editor>`, `<Toolbar>`, `useEditor()` | ~5 KB       |
-| `@seditor/editor-theme` | Default Notion-like theme (CSS variables + dark mode)  | ~2 KB       |
-| `@seditor/plugin-image` | Image plugin: upload, resize, drag-and-drop, alignment | ~4 KB       |
+| `seditor-core`  | Framework-agnostic core (Lexical wrapper + commands)   | ~35 KB      |
+| `seditor-react` | React bindings: `<Editor>`, `<Toolbar>`, `useEditor()` | ~5 KB       |
+| `seditor-theme` | Default Notion-like theme (CSS variables + dark mode)  | ~2 KB       |
+| `seditor-plugin-image` | Image plugin: upload, resize, drag-and-drop, alignment | ~4 KB       |
 
 ## Core API
 
 ```ts
-import { createSeditor } from "@seditor/editor-core";
+import { createSeditor } from "seditor-core";
 
 const instance = createSeditor({
   namespace: "my-editor",
@@ -96,7 +96,7 @@ instance.getJSON(); // -> Lexical EditorState JSON
 ### Plugin contract (Phase 2)
 
 ```ts
-import type { SeditorPlugin } from "@seditor/editor-core";
+import type { SeditorPlugin } from "seditor-core";
 
 const myPlugin: SeditorPlugin = {
   name: "my-plugin",
@@ -119,7 +119,7 @@ them to rebrand:
 }
 ```
 
-Dark mode ships as `@seditor/editor-theme/dark.css` and activates via
+Dark mode ships as `seditor-theme/dark.css` and activates via
 `prefers-color-scheme` or the `data-se-theme="dark"` attribute.
 
 ## Development

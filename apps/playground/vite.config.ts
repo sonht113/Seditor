@@ -6,23 +6,23 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@seditor/editor-core": resolve(
+      "seditor-core": resolve(
         __dirname,
         "../../packages/core/src/index.ts",
       ),
-      "@seditor/editor-react": resolve(
+      "seditor-react": resolve(
         __dirname,
         "../../packages/react/src/index.ts",
       ),
-      "@seditor/editor-theme/index.css": resolve(
+      "seditor-theme/index.css": resolve(
         __dirname,
         "../../packages/theme-default/src/index.css",
       ),
-      "@seditor/editor-theme/dark.css": resolve(
+      "seditor-theme/dark.css": resolve(
         __dirname,
         "../../packages/theme-default/src/dark.css",
       ),
-      "@seditor/plugin-image": resolve(
+      "seditor-plugin-image": resolve(
         __dirname,
         "../../packages/plugin-image/src/index.ts",
       ),

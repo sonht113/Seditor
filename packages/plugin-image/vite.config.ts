@@ -10,11 +10,16 @@ export default defineConfig({
       fileName: (format) => (format === "es" ? "index.js" : "index.cjs"),
     },
     rollupOptions: {
-      external: ["lexical", "@seditor/editor-core"],
+      external: ["lexical", "seditor-core"],
     },
     sourcemap: true,
   },
-  plugins: [dts({ tsconfigPath: "./tsconfig.json" })],
+  plugins: [
+    dts({
+      tsconfigPath: "./tsconfig.json",
+      exclude: ["**/*.test.ts", "**/*.test.tsx"],
+    }),
+  ],
   test: {
     environment: "jsdom",
     globals: true,

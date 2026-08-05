@@ -1,6 +1,6 @@
 {
-  "name": "@seditor/plugin-image",
-  "version": "0.0.0",
+  "name": "seditor-plugin-image",
+  "version": "1.0.0",
   "description": "Image plugin for Seditor.",
   "license": "MIT",
   "type": "module",
@@ -28,14 +28,13 @@
     "clean": "rm -rf dist .turbo *.tsbuildinfo"
   },
   "dependencies": {
-    "@seditor/editor-core": "workspace:*"
+    "seditor-core": "workspace:*"
   },
   "peerDependencies": {
-    "@seditor/editor-core": ">=0.0.0",
     "lexical": "^0.49.0"
   },
   "devDependencies": {
-    "@seditor/tsconfig": "workspace:*",
+    "seditor-tsconfig": "workspace:*",
     "jsdom": "^24.0.0",
     "lexical": "^0.49.0",
     "vite": "^5.4.0",

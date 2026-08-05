@@ -1,5 +1,5 @@
 {
-  "extends": "@seditor/tsconfig/base.json",
+  "extends": "seditor-tsconfig/base.json",
   "include": [],
   "exclude": ["node_modules", "dist", "build", ".turbo", "coverage"]
 }

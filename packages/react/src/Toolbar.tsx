@@ -3,12 +3,12 @@ import { CAN_REDO_COMMAND, CAN_UNDO_COMMAND } from "lexical";
 import {
   SE_OPEN_IMAGE_COMMAND,
   SE_OPEN_LINK_COMMAND,
-} from "@seditor/editor-core";
+} from "seditor-core";
 import { useEditor } from "./Editor";
 import { defaultToolbarItems } from "./defaultToolbar";
 import { ColorPicker } from "./ColorPicker";
 import { FontSizePicker } from "./FontSizePicker";
-import type { ToolbarItem } from "@seditor/editor-core";
+import type { ToolbarItem } from "seditor-core";
 
 export interface ToolbarProps {
   items?: ToolbarItem[];

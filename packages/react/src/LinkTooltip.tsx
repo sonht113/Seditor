@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { COMMAND_PRIORITY_LOW } from "lexical";
-import { SE_OPEN_LINK_COMMAND, getLinkUrl } from "@seditor/editor-core";
+import { SE_OPEN_LINK_COMMAND, getLinkUrl } from "seditor-core";
 import { useEditor } from "./Editor";
 
 interface TooltipState {

@@ -1,17 +1,17 @@
-# @seditor/editor-core
+# seditor-core
 
 Framework-agnostic core of [Seditor](https://github.com/seditor/seditor), built on [Lexical](https://lexical.dev).
 
 ## Install
 
 ```bash
-npm install @seditor/editor-core lexical
+npm install seditor-core lexical
 ```
 
 ## Usage
 
 ```ts
-import { createSeditor } from "@seditor/editor-core";
+import { createSeditor } from "seditor-core";
 
 const instance = createSeditor({
   html: "<p>Hello</p>",

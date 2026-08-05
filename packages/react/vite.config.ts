@@ -16,12 +16,18 @@ export default defineConfig({
         "react-dom",
         "react/jsx-runtime",
         "lexical",
-        "@seditor/editor-core",
+        "seditor-core",
       ],
     },
     sourcemap: true,
   },
-  plugins: [react(), dts({ tsconfigPath: "./tsconfig.json" })],
+  plugins: [
+    react(),
+    dts({
+      tsconfigPath: "./tsconfig.json",
+      exclude: ["**/*.test.ts", "**/*.test.tsx"],
+    }),
+  ],
   test: {
     environment: "jsdom",
     globals: true,

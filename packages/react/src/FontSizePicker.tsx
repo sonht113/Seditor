@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getPendingFontSize } from "@seditor/editor-core";
+import { getPendingFontSize } from "seditor-core";
 import { useEditor } from "./Editor";
 
 const FONT_SIZES: Array<{ label: string; value: string | null }> = [

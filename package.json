@@ -10,7 +10,7 @@
   },
   "size-limit": [
     {
-      "name": "@seditor/editor-core",
+      "name": "seditor-core",
       "path": "packages/core/dist/index.js",
       "limit": "31 KB",
       "gzip": true,
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "name": "@seditor/editor-react",
+      "name": "seditor-react",
       "path": "packages/react/dist/index.js",
       "limit": "10 KB",
       "gzip": true,
@@ -33,23 +33,23 @@
         "lexical",
         "react",
         "react-dom",
-        "@seditor/editor-core"
+        "seditor-core"
       ]
     },
     {
-      "name": "@seditor/editor-theme",
+      "name": "seditor-theme",
       "path": "packages/theme-default/dist/index.css",
       "limit": "5 KB",
       "gzip": true
     },
     {
-      "name": "@seditor/plugin-image",
+      "name": "seditor-plugin-image",
       "path": "packages/plugin-image/dist/index.js",
       "limit": "5 KB",
       "gzip": true,
       "ignore": [
         "lexical",
-        "@seditor/editor-core"
+        "seditor-core"
       ]
     }
   ],
@@ -70,7 +70,7 @@
     "@changesets/changelog-github": "^0.7.0",
     "@changesets/cli": "^2.31.1",
     "@eslint/js": "^9.0.0",
-    "@seditor/tsconfig": "workspace:*",
+    "seditor-tsconfig": "workspace:*",
     "@size-limit/preset-small-lib": "^13.0.3",
     "eslint": "^9.0.0",
     "eslint-plugin-react": "^7.35.0",

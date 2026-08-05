@@ -21,7 +21,7 @@ import {
   type ToolbarItem,
   SE_OPEN_IMAGE_COMMAND,
   SE_SET_ALIGN_COMMAND,
-} from "@seditor/editor-core";
+} from "seditor-core";
 import {
   $createImageNode,
   $isImageNode,

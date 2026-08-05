@@ -1,5 +1,5 @@
 {
-  "extends": "@seditor/tsconfig/react.json",
+  "extends": "seditor-tsconfig/react.json",
   "compilerOptions": {
     "types": ["react", "react-dom"]
   },

@@ -43,8 +43,8 @@ body:
     attributes:
       label: Framework binding
       options:
-        - React (@seditor/editor-react)
-        - Core only (@seditor/editor-core)
+        - React (seditor-react)
+        - Core only (seditor-core)
         - Other
     validations:
       required: true

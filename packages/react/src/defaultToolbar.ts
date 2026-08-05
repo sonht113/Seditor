@@ -1,4 +1,4 @@
-import type { ToolbarItem } from "@seditor/editor-core";
+import type { ToolbarItem } from "seditor-core";
 import {
   isTextFormatActive,
   isHeadingActive,
@@ -7,7 +7,7 @@ import {
   isLinkActive,
   getActiveAlign,
   getActiveImageAlign,
-} from "@seditor/editor-core";
+} from "seditor-core";
 
 const icon = (path: string) =>
   `<svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;

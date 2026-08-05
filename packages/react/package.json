@@ -1,6 +1,6 @@
 {
-  "name": "@seditor/editor-react",
-  "version": "0.0.0",
+  "name": "seditor-react",
+  "version": "1.0.0",
   "description": "React bindings for Seditor.",
   "license": "MIT",
   "type": "module",
@@ -29,7 +29,7 @@
     "clean": "rm -rf dist .turbo *.tsbuildinfo"
   },
   "dependencies": {
-    "@seditor/editor-core": "workspace:*"
+    "seditor-core": "workspace:*"
   },
   "peerDependencies": {
     "lexical": "^0.49.0",
@@ -37,7 +37,7 @@
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "@seditor/tsconfig": "workspace:*",
+    "seditor-tsconfig": "workspace:*",
     "@testing-library/react": "^16.0.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",

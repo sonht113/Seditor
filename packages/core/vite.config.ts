@@ -14,5 +14,10 @@ export default defineConfig({
     },
     sourcemap: true,
   },
-  plugins: [dts({ tsconfigPath: "./tsconfig.json" })],
+  plugins: [
+    dts({
+      tsconfigPath: "./tsconfig.json",
+      exclude: ["**/*.test.ts", "**/*.test.tsx"],
+    }),
+  ],
 });

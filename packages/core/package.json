@@ -1,6 +1,6 @@
 {
-  "name": "@seditor/editor-core",
-  "version": "0.0.0",
+  "name": "seditor-core",
+  "version": "1.0.0",
   "description": "Framework-agnostic core of Seditor, built on Lexical.",
   "license": "MIT",
   "type": "module",
@@ -36,7 +36,7 @@
     "@lexical/selection": "^0.49.0"
   },
   "devDependencies": {
-    "@seditor/tsconfig": "workspace:*",
+    "seditor-tsconfig": "workspace:*",
     "jsdom": "^24.0.0",
     "lexical": "^0.49.0",
     "vite": "^5.4.0",

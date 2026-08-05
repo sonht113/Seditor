@@ -12,7 +12,7 @@ import {
   createSeditor,
   setHTML,
   SE_SET_ALIGN_COMMAND,
-} from "@seditor/editor-core";
+} from "seditor-core";
 import {
   ImageNode,
   $createImageNode,

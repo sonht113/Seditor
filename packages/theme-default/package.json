@@ -1,6 +1,6 @@
 {
-  "name": "@seditor/editor-theme",
-  "version": "0.0.0",
+  "name": "seditor-theme",
+  "version": "1.0.0",
   "description": "Default Notion-like theme for Seditor (CSS variables).",
   "license": "MIT",
   "sideEffects": [
@@ -32,7 +32,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "devDependencies": {
-    "@seditor/tsconfig": "workspace:*",
+    "seditor-tsconfig": "workspace:*",
     "vite": "^5.4.0"
   }
 }

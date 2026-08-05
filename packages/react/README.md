@@ -1,11 +1,11 @@
-# @seditor/editor-react
+# seditor-react
 
 React bindings for [Seditor](https://github.com/seditor/seditor).
 
 ## Install
 
 ```bash
-npm install @seditor/editor-react @seditor/editor-theme
+npm install seditor-react seditor-theme
 ```
 
 Peer dependencies: `react`, `react-dom`, `lexical`.
@@ -13,8 +13,8 @@ Peer dependencies: `react`, `react-dom`, `lexical`.
 ## Usage
 
 ```tsx
-import { Editor, Toolbar } from "@seditor/editor-react";
-import "@seditor/editor-theme/index.css";
+import { Editor, Toolbar } from "seditor-react";
+import "seditor-theme/index.css";
 
 export function App() {
   return (

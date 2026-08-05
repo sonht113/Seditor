@@ -4,7 +4,7 @@ import type { LexicalEditor } from "lexical";
 import { Editor, useEditor } from "./Editor";
 import { Toolbar } from "./Toolbar";
 import { LinkTooltip } from "./LinkTooltip";
-import { SE_OPEN_LINK_COMMAND } from "@seditor/editor-core";
+import { SE_OPEN_LINK_COMMAND } from "seditor-core";
 
 describe("Editor", () => {
   it("renders a contenteditable root", () => {

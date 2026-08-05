@@ -1,20 +1,20 @@
-# @seditor/plugin-image
+# seditor-plugin-image
 
 Image plugin for [Seditor](https://github.com/seditor/seditor) — upload, resize, drag-and-drop, and alignment.
 
 ## Install
 
 ```bash
-npm install @seditor/plugin-image
+npm install seditor-plugin-image
 ```
 
-Peer dependencies: `@seditor/editor-core`, `lexical`.
+Peer dependencies: `seditor-core`, `lexical`.
 
 ## Usage
 
 ```tsx
-import { Editor, Toolbar } from "@seditor/editor-react";
-import { createImagePlugin } from "@seditor/plugin-image";
+import { Editor, Toolbar } from "seditor-react";
+import { createImagePlugin } from "seditor-plugin-image";
 
 const uploadHandler = async (file: File) => {
   // upload and return URL

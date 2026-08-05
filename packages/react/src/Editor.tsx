@@ -7,8 +7,8 @@ import {
   type ReactNode,
 } from "react";
 import { $getRoot } from "lexical";
-import { createSeditor } from "@seditor/editor-core";
-import type { SeditorConfig, SeditorInstance } from "@seditor/editor-core";
+import { createSeditor } from "seditor-core";
+import type { SeditorConfig, SeditorInstance } from "seditor-core";
 import { LinkTooltip } from "./LinkTooltip";
 
 const SeditorContext = createContext<SeditorInstance | null>(null);
