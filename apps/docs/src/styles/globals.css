@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "seditor-theme/index.css";
+@import "seditor-theme/dark.css";
+
+:root {
+  --docs-bg: #ffffff;
+  --docs-text: #1a1a1a;
+  --docs-text-muted: #6b7280;
+  --docs-border: #e5e7eb;
+  --docs-surface: #f9fafb;
+  --docs-code-bg: #1e1e2e;
+}
+
+.dark {
+  --docs-bg: #1a1b1e;
+  --docs-text: #e5e7eb;
+  --docs-text-muted: #9ca3af;
+  --docs-border: #2d2e32;
+  --docs-surface: #222326;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--docs-bg);
+  color: var(--docs-text);
+  font-family: theme("fontFamily.sans");
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.docs-prose {
+  @apply leading-relaxed;
+}
+
+.docs-prose h2 {
+  @apply text-2xl font-bold mt-10 mb-4;
+}
+
+.docs-prose h3 {
+  @apply text-lg font-semibold mt-6 mb-3;
+}
+
+.docs-prose p {
+  @apply my-4 text-[15px];
+}
+
+.docs-prose ul {
+  @apply list-disc pl-6 my-4 space-y-1;
+}
+
+.docs-prose a {
+  @apply text-brand-500 hover:text-brand-600 underline;
+}
+
+.docs-prose table {
+  @apply w-full my-6 border-collapse;
+}
+
+.docs-prose th {
+  @apply text-left text-sm font-semibold border-b border-[var(--docs-border)] py-2 px-3;
+}
+
+.docs-prose td {
+  @apply text-sm border-b border-[var(--docs-border)] py-2 px-3;
+}
+
+.docs-prose code {
+  @apply font-mono text-[0.85em] px-1.5 py-0.5 rounded bg-[var(--docs-surface)] text-brand-500;
+}

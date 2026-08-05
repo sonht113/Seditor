@@ -4,3 +4,8 @@ packages:
   - "tooling/*"
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - seditor-core@1.0.0
+  - seditor-plugin-image@1.0.0
+  - seditor-react@1.0.0
+  - seditor-theme@1.0.0
