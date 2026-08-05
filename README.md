@@ -49,11 +49,11 @@ export function App() {
 
 ## Packages
 
-| Package                 | Description                                            | Size (gzip) |
-| ----------------------- | ------------------------------------------------------ | ----------- |
-| `seditor-core`  | Framework-agnostic core (Lexical wrapper + commands)   | ~35 KB      |
-| `seditor-react` | React bindings: `<Editor>`, `<Toolbar>`, `useEditor()` | ~5 KB       |
-| `seditor-theme` | Default Notion-like theme (CSS variables + dark mode)  | ~2 KB       |
+| Package                | Description                                            | Size (gzip) |
+| ---------------------- | ------------------------------------------------------ | ----------- |
+| `seditor-core`         | Framework-agnostic core (Lexical wrapper + commands)   | ~35 KB      |
+| `seditor-react`        | React bindings: `<Editor>`, `<Toolbar>`, `useEditor()` | ~5 KB       |
+| `seditor-theme`        | Default Notion-like theme (CSS variables + dark mode)  | ~2 KB       |
 | `seditor-plugin-image` | Image plugin: upload, resize, drag-and-drop, alignment | ~4 KB       |
 
 ## Core API

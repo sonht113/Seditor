@@ -51,7 +51,9 @@ export function CodeBlock({ code, lang = "tsx", filename }: CodeBlockProps) {
       <div
         className="overflow-x-auto p-4 text-sm [&_pre]:!bg-transparent [&_pre]:!p-0 [&_code]:!text-sm"
         dangerouslySetInnerHTML={
-          html ? { __html: html } : { __html: `<pre style="color:#cdd6f4">${escapeHtml(code)}</pre>` }
+          html
+            ? { __html: html }
+            : { __html: `<pre style="color:#cdd6f4">${escapeHtml(code)}</pre>` }
         }
       />
     </div>
@@ -59,8 +61,5 @@ export function CodeBlock({ code, lang = "tsx", filename }: CodeBlockProps) {
 }
 
 function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }

@@ -19,7 +19,8 @@ export function DarkToggle() {
       className="flex items-center gap-1.5 rounded-lg border border-[var(--docs-border)] px-3 py-1.5 text-sm font-medium text-[var(--docs-text-muted)] hover:bg-[var(--docs-surface)] transition-colors"
       aria-label="Toggle dark mode"
     >
-      {dark ? "☀" : "☾"} <span className="hidden sm:inline">{dark ? "Light" : "Dark"}</span>
+      {dark ? "☀" : "☾"}{" "}
+      <span className="hidden sm:inline">{dark ? "Light" : "Dark"}</span>
     </button>
   );
 }

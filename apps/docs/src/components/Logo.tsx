@@ -4,7 +4,11 @@ interface LogoProps {
   className?: string;
 }
 
-export function Logo({ size = 40, withWordmark = false, className = "" }: LogoProps) {
+export function Logo({
+  size = 40,
+  withWordmark = false,
+  className = "",
+}: LogoProps) {
   const gradientId = `se-logo-grad-${size}`;
 
   return (

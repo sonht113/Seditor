@@ -27,30 +27,82 @@ const myPlugin: SeditorPlugin = {
 };`;
 
 const COMMANDS = [
-  { cmd: "toggleBold / toggleItalic / toggleUnderline / toggleStrikethrough", desc: "Inline text formats" },
+  {
+    cmd: "toggleBold / toggleItalic / toggleUnderline / toggleStrikethrough",
+    desc: "Inline text formats",
+  },
   { cmd: "toggleHeading(tag)", desc: 'tag: "h1" | "h2" | "h3"' },
   { cmd: "setParagraph()", desc: "Convert block to paragraph" },
   { cmd: "toggleBulletList() / toggleNumberedList()", desc: "Lists" },
   { cmd: "setLink(url) / unsetLink()", desc: "Links" },
-  { cmd: "setAlign(align)", desc: 'align: "left" | "center" | "right" — text blocks and images' },
+  {
+    cmd: "setAlign(align)",
+    desc: 'align: "left" | "center" | "right" — text blocks and images',
+  },
   { cmd: "setTextColor(color) / clearTextColor()", desc: "Text color" },
-  { cmd: "setTextBackgroundColor(color) / clearTextBackgroundColor()", desc: "Text background color" },
-  { cmd: "setFontSize(size) / clearFontSize()", desc: 'Font size (e.g. "16px")' },
+  {
+    cmd: "setTextBackgroundColor(color) / clearTextBackgroundColor()",
+    desc: "Text background color",
+  },
+  {
+    cmd: "setFontSize(size) / clearFontSize()",
+    desc: 'Font size (e.g. "16px")',
+  },
   { cmd: "undo() / redo()", desc: "History" },
   { cmd: "focus()", desc: "Focus the editor" },
 ];
 
 const METHODS = [
-  { method: "editor", desc: "The underlying LexicalEditor instance", returns: "LexicalEditor" },
-  { method: "commands", desc: "Command dispatcher object", returns: "SeditorCommands" },
-  { method: "registerPlugin(plugin)", desc: "Register a plugin at runtime", returns: "() => void" },
-  { method: "getHTML()", desc: "Serialize editor content to HTML", returns: "string" },
-  { method: "getJSON()", desc: "Serialize to Lexical EditorState JSON", returns: "unknown" },
-  { method: "setHTML(html)", desc: "Replace editor content from HTML", returns: "void" },
-  { method: "canUndo()", desc: "Whether undo is available", returns: "boolean" },
-  { method: "canRedo()", desc: "Whether redo is available", returns: "boolean" },
-  { method: "toolbarItems", desc: "Toolbar items contributed by plugins", returns: "ToolbarItem[]" },
-  { method: "destroy()", desc: "Clean up listeners and free resources", returns: "void" },
+  {
+    method: "editor",
+    desc: "The underlying LexicalEditor instance",
+    returns: "LexicalEditor",
+  },
+  {
+    method: "commands",
+    desc: "Command dispatcher object",
+    returns: "SeditorCommands",
+  },
+  {
+    method: "registerPlugin(plugin)",
+    desc: "Register a plugin at runtime",
+    returns: "() => void",
+  },
+  {
+    method: "getHTML()",
+    desc: "Serialize editor content to HTML",
+    returns: "string",
+  },
+  {
+    method: "getJSON()",
+    desc: "Serialize to Lexical EditorState JSON",
+    returns: "unknown",
+  },
+  {
+    method: "setHTML(html)",
+    desc: "Replace editor content from HTML",
+    returns: "void",
+  },
+  {
+    method: "canUndo()",
+    desc: "Whether undo is available",
+    returns: "boolean",
+  },
+  {
+    method: "canRedo()",
+    desc: "Whether redo is available",
+    returns: "boolean",
+  },
+  {
+    method: "toolbarItems",
+    desc: "Toolbar items contributed by plugins",
+    returns: "ToolbarItem[]",
+  },
+  {
+    method: "destroy()",
+    desc: "Clean up listeners and free resources",
+    returns: "void",
+  },
 ];
 
 export function CoreAPI() {
@@ -70,30 +122,106 @@ export function CoreAPI() {
       <h3>SeditorConfig</h3>
       <table>
         <thead>
-          <tr><th>Property</th><th>Type</th><th>Default</th></tr>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td><code>namespace</code></td><td><code>string</code></td><td><code>"seditor"</code></td></tr>
-          <tr><td><code>html</code></td><td><code>string</code></td><td>—</td></tr>
-          <tr><td><code>editable</code></td><td><code>boolean</code></td><td><code>true</code></td></tr>
-          <tr><td><code>placeholder</code></td><td><code>string</code></td><td>—</td></tr>
-          <tr><td><code>plugins</code></td><td><code>SeditorPlugin[]</code></td><td><code>[]</code></td></tr>
-          <tr><td><code>theme</code></td><td><code>Partial&lt;ThemeConfig&gt;</code></td><td>default theme</td></tr>
-          <tr><td><code>shortcuts</code></td><td><code>boolean</code></td><td><code>true</code></td></tr>
+          <tr>
+            <td>
+              <code>namespace</code>
+            </td>
+            <td>
+              <code>string</code>
+            </td>
+            <td>
+              <code>"seditor"</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>html</code>
+            </td>
+            <td>
+              <code>string</code>
+            </td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>
+              <code>editable</code>
+            </td>
+            <td>
+              <code>boolean</code>
+            </td>
+            <td>
+              <code>true</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>placeholder</code>
+            </td>
+            <td>
+              <code>string</code>
+            </td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>
+              <code>plugins</code>
+            </td>
+            <td>
+              <code>SeditorPlugin[]</code>
+            </td>
+            <td>
+              <code>[]</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>theme</code>
+            </td>
+            <td>
+              <code>Partial&lt;ThemeConfig&gt;</code>
+            </td>
+            <td>default theme</td>
+          </tr>
+          <tr>
+            <td>
+              <code>shortcuts</code>
+            </td>
+            <td>
+              <code>boolean</code>
+            </td>
+            <td>
+              <code>true</code>
+            </td>
+          </tr>
         </tbody>
       </table>
 
       <h2>SeditorInstance methods</h2>
       <table>
         <thead>
-          <tr><th>Method</th><th>Description</th><th>Returns</th></tr>
+          <tr>
+            <th>Method</th>
+            <th>Description</th>
+            <th>Returns</th>
+          </tr>
         </thead>
         <tbody>
           {METHODS.map((m) => (
             <tr key={m.method}>
-              <td><code>{m.method}</code></td>
+              <td>
+                <code>{m.method}</code>
+              </td>
               <td>{m.desc}</td>
-              <td><code>{m.returns}</code></td>
+              <td>
+                <code>{m.returns}</code>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -106,12 +234,17 @@ export function CoreAPI() {
       </p>
       <table>
         <thead>
-          <tr><th>Command</th><th>Description</th></tr>
+          <tr>
+            <th>Command</th>
+            <th>Description</th>
+          </tr>
         </thead>
         <tbody>
           {COMMANDS.map((c) => (
             <tr key={c.cmd}>
-              <td><code>{c.cmd}</code></td>
+              <td>
+                <code>{c.cmd}</code>
+              </td>
               <td>{c.desc}</td>
             </tr>
           ))}
@@ -128,16 +261,76 @@ export function CoreAPI() {
       <h3>SeditorPlugin fields</h3>
       <table>
         <thead>
-          <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td><code>name</code></td><td><code>string</code></td><td>Unique plugin identifier</td></tr>
-          <tr><td><code>nodes</code></td><td><code>Klass&lt;LexicalNode&gt;[]</code></td><td>Custom Lexical nodes to register</td></tr>
-          <tr><td><code>listeners</code></td><td><code>(editor) =&gt; cleanup[]</code></td><td>Register update/selection listeners</td></tr>
-          <tr><td><code>toolbarItem</code></td><td><code>ToolbarItem | ToolbarItem[]</code></td><td>Toolbar entries contributed by this plugin</td></tr>
-          <tr><td><code>theme</code></td><td><code>Partial&lt;ThemeConfig&gt;</code></td><td>Theme overrides</td></tr>
-          <tr><td><code>onInit</code></td><td><code>(editor) =&gt; void</code></td><td>Called when the editor is ready</td></tr>
-          <tr><td><code>onDestroy</code></td><td><code>(editor) =&gt; void</code></td><td>Called on teardown</td></tr>
+          <tr>
+            <td>
+              <code>name</code>
+            </td>
+            <td>
+              <code>string</code>
+            </td>
+            <td>Unique plugin identifier</td>
+          </tr>
+          <tr>
+            <td>
+              <code>nodes</code>
+            </td>
+            <td>
+              <code>Klass&lt;LexicalNode&gt;[]</code>
+            </td>
+            <td>Custom Lexical nodes to register</td>
+          </tr>
+          <tr>
+            <td>
+              <code>listeners</code>
+            </td>
+            <td>
+              <code>(editor) =&gt; cleanup[]</code>
+            </td>
+            <td>Register update/selection listeners</td>
+          </tr>
+          <tr>
+            <td>
+              <code>toolbarItem</code>
+            </td>
+            <td>
+              <code>ToolbarItem | ToolbarItem[]</code>
+            </td>
+            <td>Toolbar entries contributed by this plugin</td>
+          </tr>
+          <tr>
+            <td>
+              <code>theme</code>
+            </td>
+            <td>
+              <code>Partial&lt;ThemeConfig&gt;</code>
+            </td>
+            <td>Theme overrides</td>
+          </tr>
+          <tr>
+            <td>
+              <code>onInit</code>
+            </td>
+            <td>
+              <code>(editor) =&gt; void</code>
+            </td>
+            <td>Called when the editor is ready</td>
+          </tr>
+          <tr>
+            <td>
+              <code>onDestroy</code>
+            </td>
+            <td>
+              <code>(editor) =&gt; void</code>
+            </td>
+            <td>Called on teardown</td>
+          </tr>
         </tbody>
       </table>
     </div>

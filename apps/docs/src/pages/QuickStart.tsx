@@ -49,8 +49,8 @@ export function QuickStart() {
 
       <h2>Basic usage</h2>
       <p>
-        Import the <code>Editor</code> and <code>Toolbar</code> components,
-        plus the theme CSS. That's all you need for a fully functional editor.
+        Import the <code>Editor</code> and <code>Toolbar</code> components, plus
+        the theme CSS. That's all you need for a fully functional editor.
       </p>
       <CodeBlock code={QUICK_CODE} lang="tsx" filename="App.tsx" />
 

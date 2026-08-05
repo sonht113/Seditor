@@ -22,13 +22,25 @@ const CSS_VARS = [
   { name: "--se-color-primary", value: "#2383e2", desc: "Primary/brand color" },
   { name: "--se-color-link", value: "#2383e2", desc: "Link color" },
   { name: "--se-color-surface", value: "#f7f6f3", desc: "Toolbar/surface bg" },
-  { name: "--se-color-selection", value: "rgba(35,131,226,.18)", desc: "Selection highlight" },
-  { name: "--se-font-family", value: "system stack", desc: "Editor font family" },
+  {
+    name: "--se-color-selection",
+    value: "rgba(35,131,226,.18)",
+    desc: "Selection highlight",
+  },
+  {
+    name: "--se-font-family",
+    value: "system stack",
+    desc: "Editor font family",
+  },
   { name: "--se-font-size", value: "15px", desc: "Base font size" },
   { name: "--se-line-height", value: "1.6", desc: "Line height" },
   { name: "--se-radius", value: "8px", desc: "Default border radius" },
   { name: "--se-editor-min-height", value: "240px", desc: "Min editor height" },
-  { name: "--se-toolbar-button-size", value: "30px", desc: "Toolbar button size" },
+  {
+    name: "--se-toolbar-button-size",
+    value: "30px",
+    desc: "Toolbar button size",
+  },
 ];
 
 export function Theming() {
@@ -44,13 +56,21 @@ export function Theming() {
       <h2>CSS variables</h2>
       <table>
         <thead>
-          <tr><th>Variable</th><th>Default</th><th>Description</th></tr>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
         </thead>
         <tbody>
           {CSS_VARS.map((v) => (
             <tr key={v.name}>
-              <td><code>{v.name}</code></td>
-              <td><code>{v.value}</code></td>
+              <td>
+                <code>{v.name}</code>
+              </td>
+              <td>
+                <code>{v.value}</code>
+              </td>
               <td>{v.desc}</td>
             </tr>
           ))}
@@ -66,10 +86,10 @@ export function Theming() {
 
       <h2>Dark mode</h2>
       <p>
-        Dark mode ships as <code>seditor-theme/dark.css</code>. It activates
-        via <code>prefers-color-scheme</code> automatically, or explicitly via
-        the <code>data-se-theme="dark"</code> attribute on{" "}
-        <code>&lt;html&gt;</code>.
+        Dark mode ships as <code>seditor-theme/dark.css</code>. It activates via{" "}
+        <code>prefers-color-scheme</code> automatically, or explicitly via the{" "}
+        <code>data-se-theme="dark"</code> attribute on <code>&lt;html&gt;</code>
+        .
       </p>
       <CodeBlock code={DARK_CODE} lang="ts" filename="theme-toggle.ts" />
 
@@ -79,14 +99,68 @@ export function Theming() {
       </p>
       <table>
         <thead>
-          <tr><th>Variable</th><th>Light</th><th>Dark</th></tr>
+          <tr>
+            <th>Variable</th>
+            <th>Light</th>
+            <th>Dark</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td><code>--se-color-bg</code></td><td><code>#ffffff</code></td><td><code>#2f3437</code></td></tr>
-          <tr><td><code>--se-color-text</code></td><td><code>#37352f</code></td><td><code>#d8d8d6</code></td></tr>
-          <tr><td><code>--se-color-primary</code></td><td><code>#2383e2</code></td><td><code>#5b9ff5</code></td></tr>
-          <tr><td><code>--se-color-surface</code></td><td><code>#f7f6f3</code></td><td><code>#383d3f</code></td></tr>
-          <tr><td><code>--se-color-border</code></td><td><code>#e3e2e0</code></td><td><code>#4a4f52</code></td></tr>
+          <tr>
+            <td>
+              <code>--se-color-bg</code>
+            </td>
+            <td>
+              <code>#ffffff</code>
+            </td>
+            <td>
+              <code>#2f3437</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>--se-color-text</code>
+            </td>
+            <td>
+              <code>#37352f</code>
+            </td>
+            <td>
+              <code>#d8d8d6</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>--se-color-primary</code>
+            </td>
+            <td>
+              <code>#2383e2</code>
+            </td>
+            <td>
+              <code>#5b9ff5</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>--se-color-surface</code>
+            </td>
+            <td>
+              <code>#f7f6f3</code>
+            </td>
+            <td>
+              <code>#383d3f</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>--se-color-border</code>
+            </td>
+            <td>
+              <code>#e3e2e0</code>
+            </td>
+            <td>
+              <code>#4a4f52</code>
+            </td>
+          </tr>
         </tbody>
       </table>
 

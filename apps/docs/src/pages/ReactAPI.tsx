@@ -50,15 +50,45 @@ export function App() {
 }`;
 
 const EDITOR_PROPS = [
-  { prop: "config", type: "SeditorConfig", desc: "Editor configuration (read once on mount)", default: "{}" },
-  { prop: "className", type: "string", desc: "Custom class for the editor wrapper", default: '"se-editor"' },
-  { prop: "onReady", type: "(instance: SeditorInstance) => void", desc: "Called when the editor is mounted", default: "—" },
-  { prop: "children", type: "ReactNode", desc: "Toolbar and other components inside the editor context", default: "—" },
+  {
+    prop: "config",
+    type: "SeditorConfig",
+    desc: "Editor configuration (read once on mount)",
+    default: "{}",
+  },
+  {
+    prop: "className",
+    type: "string",
+    desc: "Custom class for the editor wrapper",
+    default: '"se-editor"',
+  },
+  {
+    prop: "onReady",
+    type: "(instance: SeditorInstance) => void",
+    desc: "Called when the editor is mounted",
+    default: "—",
+  },
+  {
+    prop: "children",
+    type: "ReactNode",
+    desc: "Toolbar and other components inside the editor context",
+    default: "—",
+  },
 ];
 
 const TOOLBAR_PROPS = [
-  { prop: "items", type: "ToolbarItem[]", desc: "Custom toolbar items. Omit to use defaults + plugin items.", default: "defaultToolbarItems" },
-  { prop: "className", type: "string", desc: "Custom class for the toolbar wrapper", default: '"se-toolbar"' },
+  {
+    prop: "items",
+    type: "ToolbarItem[]",
+    desc: "Custom toolbar items. Omit to use defaults + plugin items.",
+    default: "defaultToolbarItems",
+  },
+  {
+    prop: "className",
+    type: "string",
+    desc: "Custom class for the toolbar wrapper",
+    default: '"se-toolbar"',
+  },
 ];
 
 export function ReactAPI() {
@@ -81,15 +111,26 @@ export function ReactAPI() {
       <h3>EditorProps</h3>
       <table>
         <thead>
-          <tr><th>Prop</th><th>Type</th><th>Description</th><th>Default</th></tr>
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
         </thead>
         <tbody>
           {EDITOR_PROPS.map((p) => (
             <tr key={p.prop}>
-              <td><code>{p.prop}</code></td>
-              <td><code>{p.type}</code></td>
+              <td>
+                <code>{p.prop}</code>
+              </td>
+              <td>
+                <code>{p.type}</code>
+              </td>
               <td>{p.desc}</td>
-              <td><code>{p.default}</code></td>
+              <td>
+                <code>{p.default}</code>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -97,21 +138,32 @@ export function ReactAPI() {
 
       <h2>&lt;Toolbar&gt;</h2>
       <p>
-        Renders toolbar buttons. Place it inside an{" "}
-        <code>&lt;Editor&gt;</code> to access the editor instance via context.
+        Renders toolbar buttons. Place it inside an <code>&lt;Editor&gt;</code>{" "}
+        to access the editor instance via context.
       </p>
       <h3>ToolbarProps</h3>
       <table>
         <thead>
-          <tr><th>Prop</th><th>Type</th><th>Description</th><th>Default</th></tr>
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
         </thead>
         <tbody>
           {TOOLBAR_PROPS.map((p) => (
             <tr key={p.prop}>
-              <td><code>{p.prop}</code></td>
-              <td><code>{p.type}</code></td>
+              <td>
+                <code>{p.prop}</code>
+              </td>
+              <td>
+                <code>{p.type}</code>
+              </td>
               <td>{p.desc}</td>
-              <td><code>{p.default}</code></td>
+              <td>
+                <code>{p.default}</code>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -134,16 +186,62 @@ export function ReactAPI() {
       <h2>Exports</h2>
       <table>
         <thead>
-          <tr><th>Name</th><th>Kind</th><th>Description</th></tr>
+          <tr>
+            <th>Name</th>
+            <th>Kind</th>
+            <th>Description</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td><code>Editor</code></td><td>Component</td><td>Main editor component</td></tr>
-          <tr><td><code>Toolbar</code></td><td>Component</td><td>Toolbar with default or custom items</td></tr>
-          <tr><td><code>useEditor</code></td><td>Hook</td><td>Access SeditorInstance from context</td></tr>
-          <tr><td><code>defaultToolbarItems</code></td><td>Constant</td><td>Default toolbar item array</td></tr>
-          <tr><td><code>LinkTooltip</code></td><td>Component</td><td>Link editing tooltip (auto-rendered)</td></tr>
-          <tr><td><code>ColorPicker</code></td><td>Component</td><td>Text/background color picker</td></tr>
-          <tr><td><code>FontSizePicker</code></td><td>Component</td><td>Font size dropdown</td></tr>
+          <tr>
+            <td>
+              <code>Editor</code>
+            </td>
+            <td>Component</td>
+            <td>Main editor component</td>
+          </tr>
+          <tr>
+            <td>
+              <code>Toolbar</code>
+            </td>
+            <td>Component</td>
+            <td>Toolbar with default or custom items</td>
+          </tr>
+          <tr>
+            <td>
+              <code>useEditor</code>
+            </td>
+            <td>Hook</td>
+            <td>Access SeditorInstance from context</td>
+          </tr>
+          <tr>
+            <td>
+              <code>defaultToolbarItems</code>
+            </td>
+            <td>Constant</td>
+            <td>Default toolbar item array</td>
+          </tr>
+          <tr>
+            <td>
+              <code>LinkTooltip</code>
+            </td>
+            <td>Component</td>
+            <td>Link editing tooltip (auto-rendered)</td>
+          </tr>
+          <tr>
+            <td>
+              <code>ColorPicker</code>
+            </td>
+            <td>Component</td>
+            <td>Text/background color picker</td>
+          </tr>
+          <tr>
+            <td>
+              <code>FontSizePicker</code>
+            </td>
+            <td>Component</td>
+            <td>Font size dropdown</td>
+          </tr>
         </tbody>
       </table>
     </div>

@@ -6,14 +6,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "seditor-core": resolve(
-        __dirname,
-        "../../packages/core/src/index.ts",
-      ),
-      "seditor-react": resolve(
-        __dirname,
-        "../../packages/react/src/index.ts",
-      ),
+      "seditor-core": resolve(__dirname, "../../packages/core/src/index.ts"),
+      "seditor-react": resolve(__dirname, "../../packages/react/src/index.ts"),
       "seditor-theme/index.css": resolve(
         __dirname,
         "../../packages/theme-default/src/index.css",

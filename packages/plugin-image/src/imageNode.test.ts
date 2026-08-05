@@ -8,11 +8,7 @@ import {
   DROP_COMMAND,
   type LexicalEditor,
 } from "lexical";
-import {
-  createSeditor,
-  setHTML,
-  SE_SET_ALIGN_COMMAND,
-} from "seditor-core";
+import { createSeditor, setHTML, SE_SET_ALIGN_COMMAND } from "seditor-core";
 import {
   ImageNode,
   $createImageNode,
