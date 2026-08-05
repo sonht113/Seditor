@@ -68,6 +68,8 @@ export interface EditorProps {
 
   /**
    * Called when the editor throws an internal error (Lexical onError).
+   * Also called when a `value` / `defaultValue` does not match `valueFormat`
+   * (the invalid content is rejected instead of crashing the React tree).
    */
   onError?: (error: Error, instance: SeditorInstance) => void;
 
@@ -79,7 +81,8 @@ export interface EditorProps {
   editable?: boolean;
 
   /**
-   * Called when the editable state changes (via prop or command).
+   * Called when the editable state actually changes (via prop or command).
+   * Not fired for the initial value on mount.
    */
   onEditableChange?: (editable: boolean) => void;
 
@@ -120,7 +123,10 @@ export interface EditorProps {
   tabIndex?: number;
 }
 
-function readValue(instance: SeditorInstance, format: EditorValueFormat): string {
+function readValue(
+  instance: SeditorInstance,
+  format: EditorValueFormat,
+): string {
   return format === "json"
     ? JSON.stringify(instance.getJSON())
     : instance.getHTML();
@@ -138,35 +144,34 @@ function writeValue(
   }
 }
 
-export const Editor = forwardRef<SeditorInstance, EditorProps>(
-  function Editor(
-    {
-      config,
-      className,
-      onReady,
-      children,
-      defaultValue,
-      value,
-      onChange,
-      onChangeDebounceMs = 0,
-      valueFormat = "html",
-      onFocus,
-      onBlur,
-      onError,
-      editable,
-      onEditableChange,
-      placeholder: placeholderProp,
-      id,
-      name,
-      ariaLabel,
-      ariaLabelledBy,
-      ariaDescribedBy,
-      spellCheck,
-      autoFocus,
-      tabIndex,
-    },
-    ref,
-  ) {
+export const Editor = forwardRef<SeditorInstance, EditorProps>(function Editor(
+  {
+    config,
+    className,
+    onReady,
+    children,
+    defaultValue,
+    value,
+    onChange,
+    onChangeDebounceMs = 0,
+    valueFormat = "html",
+    onFocus,
+    onBlur,
+    onError,
+    editable,
+    onEditableChange,
+    placeholder: placeholderProp,
+    id,
+    name,
+    ariaLabel,
+    ariaLabelledBy,
+    ariaDescribedBy,
+    spellCheck,
+    autoFocus,
+    tabIndex,
+  },
+  ref,
+) {
   const rootRef = useRef<HTMLDivElement>(null);
   const onReadyRef = useRef(onReady);
   onReadyRef.current = onReady;
@@ -200,6 +205,11 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
   const lastInternalValueRef = useRef<string | undefined>(undefined);
   const isSettingFromPropRef = useRef(false);
 
+  // Instance destroy is deferred to a microtask in the mount-effect cleanup
+  // so React StrictMode's synchronous cleanup->setup cycle (dev only) can
+  // cancel it via this flag; only a real unmount actually destroys.
+  const destroyPendingRef = useRef(false);
+
   // Debounce plumbing for `onChange`. Default (0) fires synchronously.
   // `flushOnChange` is referenced by the blur handler in the mount effect.
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -229,9 +239,13 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
   // Resolve initial content once at mount. Priority:
   // value > defaultValue > config.html.
   const initialContentRef = useRef<string | undefined>(undefined);
-  if (initialContentRef.current === undefined && (value !== undefined || defaultValue !== undefined || config?.html !== undefined)) {
-    initialContentRef.current =
-      value ?? defaultValue ?? config?.html ?? "";
+  if (
+    initialContentRef.current === undefined &&
+    (value !== undefined ||
+      defaultValue !== undefined ||
+      config?.html !== undefined)
+  ) {
+    initialContentRef.current = value ?? defaultValue ?? config?.html ?? "";
   }
   const initialContent = initialContentRef.current;
 
@@ -244,16 +258,25 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
       // Content is set below via the unified valueFormat path so JSON works
       // for initial content too.
       html: undefined,
-      // Placeholder and editable are managed reactively below.
+      // Placeholder is managed reactively below.
       placeholder: undefined,
-      editable: undefined,
+      // Editable gets its initial value here (so there is no mount-time
+      // transition) and is managed reactively via the prop effect below.
+      editable: editable ?? config?.editable,
       // Pipe Lexical errors out through the `onError` prop.
       onError: (error) => {
         onErrorRef.current?.(error, inst);
       },
     });
     if (initialContent !== undefined && initialContent !== "") {
-      writeValue(inst, initialContent, valueFormat);
+      try {
+        writeValue(inst, initialContent, valueFormat);
+      } catch (error) {
+        // Initial content that does not match `valueFormat` (e.g. an HTML
+        // string while format is "json") is reported via onError instead of
+        // crashing the render.
+        onErrorRef.current?.(error as Error, inst);
+      }
     }
     return inst;
   });
@@ -263,11 +286,12 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
   useImperativeHandle(ref, () => instance, [instance]);
 
   // Hidden input value for traditional form submission (synced with content).
-  const [hiddenValue, setHiddenValue] = useState(
-    initialContent ?? "",
-  );
+  const [hiddenValue, setHiddenValue] = useState(initialContent ?? "");
 
   useEffect(() => {
+    // A StrictMode remount (dev) runs cleanup->setup synchronously, so this
+    // reset cancels the deferred destroy queued by the previous cleanup.
+    destroyPendingRef.current = false;
     const editor = instance.editor;
     const root = rootRef.current;
     if (!root) return;
@@ -293,6 +317,15 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
       },
     );
 
+    // Single source of truth for editable changes. Lexical only triggers
+    // this listener on actual transitions, so `onEditableChange` never
+    // fires on mount — whether the change came from the prop, a command,
+    // or a direct `editor.setEditable` call.
+    const unregisterEditable = editor.registerEditableListener((next) => {
+      setEditableState(next);
+      onEditableChangeRef.current?.(next);
+    });
+
     // Focus / blur listeners on the contenteditable root. Use capture phase
     // so we catch focus delegated from inner contentEditable children.
     const handleFocus = (event: FocusEvent) => {
@@ -306,26 +339,36 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
     root.addEventListener("focus", handleFocus, true);
     root.addEventListener("blur", handleBlur, true);
 
-    if (autoFocus) {
-      editor.focus();
-    }
-
     return () => {
       unregisterUpdate();
+      unregisterEditable();
       root.removeEventListener("focus", handleFocus, true);
       root.removeEventListener("blur", handleBlur, true);
       editor.setRootElement(null);
-      instance.destroy();
+      // Defer destroy to a microtask so StrictMode's synchronous
+      // cleanup->setup cycle cancels it; only a real unmount destroys.
+      destroyPendingRef.current = true;
+      queueMicrotask(() => {
+        if (destroyPendingRef.current) instance.destroy();
+      });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [instance]);
+
+  // Focus the editor on mount (and if `autoFocus` later turns truthy).
+  // Deliberately separate from the mount effect so toggling this prop can
+  // never tear the instance down.
+  useEffect(() => {
+    if (autoFocus) {
+      instance.editor.focus();
+    }
   }, [instance, autoFocus]);
 
-  // Reactive `editable` prop -> editor.setEditable + local state.
+  // Reactive `editable` prop -> editor.setEditable. Local state sync and
+  // `onEditableChange` are handled by the editable listener registered in
+  // the mount effect, which only fires on actual transitions.
   useEffect(() => {
-    const next = editable ?? config?.editable ?? true;
-    instance.editor.setEditable(next);
-    setEditableState(next);
-    onEditableChangeRef.current?.(next);
+    instance.editor.setEditable(editable ?? config?.editable ?? true);
   }, [editable, instance]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Reactive `placeholder` prop -> local state.
@@ -343,10 +386,19 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
     if (value === current) return;
     // Layer 2: flag so the update listener does not echo this back.
     isSettingFromPropRef.current = true;
-    writeValue(instance, value, valueFormatRef.current);
-    // Flush pending update synchronously so subsequent reads are consistent.
-    instance.editor.read(() => {});
-    isSettingFromPropRef.current = false;
+    try {
+      writeValue(instance, value, valueFormatRef.current);
+      // Flush pending update synchronously so subsequent reads are consistent.
+      instance.editor.read(() => {});
+    } catch (error) {
+      // A `value` that does not match `valueFormat` (e.g. an HTML string
+      // while format is "json") is reported via onError instead of crashing
+      // the React tree.
+      onErrorRef.current?.(error as Error, instance);
+      return;
+    } finally {
+      isSettingFromPropRef.current = false;
+    }
     // Keep hidden input in sync with controlled value too.
     setHiddenValue(value);
   }, [value, instance]);
@@ -381,15 +433,12 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
             tabIndex={tabIndex}
           />
         </div>
-        {name && (
-          <input type="hidden" name={name} value={hiddenValue} />
-        )}
+        {name && <input type="hidden" name={name} value={hiddenValue} />}
         <LinkTooltip />
       </div>
     </SeditorContext.Provider>
   );
-},
-);
+});
 
 export function useEditor(): SeditorInstance {
   const instance = useContext(SeditorContext);

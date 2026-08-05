@@ -132,7 +132,9 @@ export default function App() {
             onChange={setHtml}
             placeholder="Start writing..."
             config={{
-              plugins: [createImagePlugin({ uploadHandler: demoUploadHandler })],
+              plugins: [
+                createImagePlugin({ uploadHandler: demoUploadHandler }),
+              ],
             }}
             onReady={setInstance}
           >
@@ -143,8 +145,11 @@ export default function App() {
             config={{
               html: INITIAL_HTML,
               placeholder: "Start writing...",
-              plugins: [createImagePlugin({ uploadHandler: demoUploadHandler })],
+              plugins: [
+                createImagePlugin({ uploadHandler: demoUploadHandler }),
+              ],
             }}
+            onChange={setHtml}
             onReady={setInstance}
           >
             <Toolbar />
