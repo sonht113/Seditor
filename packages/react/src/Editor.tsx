@@ -43,6 +43,13 @@ export interface EditorProps {
   onChange?: (value: string, instance: SeditorInstance) => void;
 
   /**
+   * Debounce delay (ms) for `onChange`. Defaults to `0` (fire on every
+   * update). When > 0, `onChange` is deferred until no edits happen for
+   * the given duration. Pending calls are flushed on blur and unmount.
+   */
+  onChangeDebounceMs?: number;
+
+  /**
    * Serialization format for `value` / `defaultValue` / `onChange`.
    * Defaults to `"html"`.
    */
@@ -141,6 +148,7 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
       defaultValue,
       value,
       onChange,
+      onChangeDebounceMs = 0,
       valueFormat = "html",
       onFocus,
       onBlur,
@@ -164,6 +172,8 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
   onReadyRef.current = onReady;
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
+  const onChangeDebounceMsRef = useRef(onChangeDebounceMs);
+  onChangeDebounceMsRef.current = onChangeDebounceMs;
   const onFocusRef = useRef(onFocus);
   onFocusRef.current = onFocus;
   const onBlurRef = useRef(onBlur);
@@ -193,6 +203,20 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
   // Debounce plumbing for `onChange`. Default (0) fires synchronously.
   // `flushOnChange` is referenced by the blur handler in the mount effect.
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const fireOnChange = (val: string) => {
+    const ms = onChangeDebounceMsRef.current;
+    if (ms > 0) {
+      if (debounceTimerRef.current !== null) {
+        clearTimeout(debounceTimerRef.current);
+      }
+      debounceTimerRef.current = setTimeout(() => {
+        debounceTimerRef.current = null;
+        onChangeRef.current?.(val, instance);
+      }, ms);
+    } else {
+      onChangeRef.current?.(val, instance);
+    }
+  };
   const flushOnChange = () => {
     if (debounceTimerRef.current !== null) {
       clearTimeout(debounceTimerRef.current);
@@ -264,7 +288,7 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(
         // submission always has the latest value.
         setHiddenValue(next);
         if (onChangeRef.current) {
-          onChangeRef.current(next, instance);
+          fireOnChange(next);
         }
       },
     );

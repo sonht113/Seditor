@@ -14,6 +14,100 @@ import { Toolbar } from "./Toolbar";
 import { LinkTooltip } from "./LinkTooltip";
 import { SE_OPEN_LINK_COMMAND } from "seditor-core";
 
+describe("Editor onChangeDebounceMs", () => {
+  it("fires onChange synchronously when debounce is 0 (default)", () => {
+    vi.useFakeTimers();
+    const onChange = vi.fn();
+    let editor: LexicalEditor | null = null;
+    render(
+      <Editor
+        onChange={onChange}
+        onReady={(inst) => {
+          editor = inst.editor;
+        }}
+      />,
+    );
+    act(() => {
+      editor!.update(() => {
+        const root = $getRoot();
+        root.clear();
+        root.append($createParagraphNode());
+      });
+      editor!.read(() => {});
+    });
+    expect(onChange).toHaveBeenCalled();
+    vi.useRealTimers();
+  });
+
+  it("defers onChange when onChangeDebounceMs > 0", () => {
+    vi.useFakeTimers();
+    const onChange = vi.fn();
+    let editor: LexicalEditor | null = null;
+    render(
+      <Editor
+        onChange={onChange}
+        onChangeDebounceMs={100}
+        onReady={(inst) => {
+          editor = inst.editor;
+        }}
+      />,
+    );
+    act(() => {
+      editor!.update(() => {
+        const root = $getRoot();
+        root.clear();
+        const p = $createParagraphNode();
+        p.append($createTextNode("debounced"));
+        root.append(p);
+      });
+      editor!.read(() => {});
+    });
+    expect(onChange).not.toHaveBeenCalled();
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+    expect(onChange).toHaveBeenCalled();
+    expect(onChange.mock.calls[0][0]).toContain("debounced");
+    vi.useRealTimers();
+  });
+
+  it("flushes pending debounced onChange on blur", () => {
+    vi.useFakeTimers();
+    const onChange = vi.fn();
+    let editor: LexicalEditor | null = null;
+    render(
+      <Editor
+        onChange={onChange}
+        onChangeDebounceMs={500}
+        onReady={(inst) => {
+          editor = inst.editor;
+        }}
+      />,
+    );
+    act(() => {
+      editor!.update(() => {
+        const root = $getRoot();
+        root.clear();
+        const p = $createParagraphNode();
+        p.append($createTextNode("flush on blur"));
+        root.append(p);
+      });
+      editor!.read(() => {});
+    });
+    expect(onChange).not.toHaveBeenCalled();
+    const root = document.querySelector(".se-root") as HTMLElement;
+    act(() => {
+      root.focus();
+    });
+    act(() => {
+      root.blur();
+    });
+    expect(onChange).toHaveBeenCalled();
+    expect(onChange.mock.calls[0][0]).toContain("flush on blur");
+    vi.useRealTimers();
+  });
+});
+
 describe("Editor", () => {
   it("renders a contenteditable root", () => {
     render(<Editor />);
