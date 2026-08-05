@@ -54,7 +54,7 @@ import {
   undo,
   redo,
 } from "./commands";
-import { getHTML, getJSON, setHTML } from "./serialization";
+import { getHTML, getJSON, setHTML, setJSON } from "./serialization";
 import { registerShortcuts } from "./shortcuts";
 import type {
   SeditorConfig,
@@ -85,6 +85,7 @@ export function createSeditor(config: SeditorConfig = {}): SeditorInstance {
     nodes: [...getMvpNodes(), ...pluginNodes],
     onError: (error) => {
       console.error("[Seditor]", error);
+      config.onError?.(error);
     },
   });
 
@@ -247,6 +248,7 @@ export function createSeditor(config: SeditorConfig = {}): SeditorInstance {
     getHTML: () => getHTML(editor),
     getJSON: () => getJSON(editor),
     setHTML: (html: string) => setHTML(editor, html),
+    setJSON: (json: unknown) => setJSON(editor, json),
     canUndo: () => canUndo,
     canRedo: () => canRedo,
     placeholder: config.placeholder ?? null,

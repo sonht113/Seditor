@@ -29,7 +29,7 @@ export {
   undo,
   redo,
 } from "./commands";
-export { getHTML, getJSON, setHTML } from "./serialization";
+export { getHTML, getJSON, setHTML, setJSON } from "./serialization";
 export { registerShortcuts, SE_OPEN_LINK_COMMAND } from "./shortcuts";
 export { SE_OPEN_IMAGE_COMMAND, SE_SET_ALIGN_COMMAND } from "./pluginCommands";
 export {

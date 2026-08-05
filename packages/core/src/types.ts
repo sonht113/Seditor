@@ -38,6 +38,7 @@ export interface SeditorConfig {
   html?: string;
   placeholder?: string;
   shortcuts?: boolean;
+  onError?: (error: Error) => void;
 }
 
 export interface SeditorCommands {
@@ -70,6 +71,7 @@ export interface SeditorInstance {
   getHTML: () => string;
   getJSON: () => unknown;
   setHTML: (html: string) => void;
+  setJSON: (json: unknown) => void;
   canUndo: () => boolean;
   canRedo: () => boolean;
   placeholder: string | null;
