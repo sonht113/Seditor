@@ -2,24 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "seditor-theme/index.css";
-@import "seditor-theme/dark.css";
-
 :root {
-  --docs-bg: #ffffff;
-  --docs-text: #1a1a1a;
-  --docs-text-muted: #6b7280;
-  --docs-border: #e5e7eb;
-  --docs-surface: #f9fafb;
-  --docs-code-bg: #1e1e2e;
-}
-
-.dark {
-  --docs-bg: #1a1b1e;
-  --docs-text: #e5e7eb;
-  --docs-text-muted: #9ca3af;
-  --docs-border: #2d2e32;
-  --docs-surface: #222326;
+  --docs-bg: #0f172a;
+  --docs-text: #f8fafc;
+  --docs-text-muted: #94a3b8;
+  --docs-border: #1e293b;
+  --docs-surface: #1e293b;
+  --docs-code-bg: #0d1117;
+  --docs-accent: #3b82f6;
 }
 
 html {
@@ -29,13 +19,25 @@ html {
 body {
   background-color: var(--docs-bg);
   color: var(--docs-text);
-  font-family: theme("fontFamily.sans");
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .docs-prose {
   @apply leading-relaxed;
+}
+
+.docs-prose h1 {
+  @apply text-3xl font-bold mb-2;
 }
 
 .docs-prose h2 {
@@ -47,15 +49,15 @@ body {
 }
 
 .docs-prose p {
-  @apply my-4 text-[15px];
+  @apply my-4 text-[15px] text-[var(--docs-text-muted)];
 }
 
 .docs-prose ul {
-  @apply list-disc pl-6 my-4 space-y-1;
+  @apply list-disc pl-6 my-4 space-y-1 text-[var(--docs-text-muted)];
 }
 
 .docs-prose a {
-  @apply text-brand-500 hover:text-brand-600 underline;
+  @apply text-[var(--docs-accent)] hover:text-blue-400 underline underline-offset-2;
 }
 
 .docs-prose table {
@@ -63,13 +65,17 @@ body {
 }
 
 .docs-prose th {
-  @apply text-left text-sm font-semibold border-b border-[var(--docs-border)] py-2 px-3;
+  @apply text-left text-sm font-semibold border-b border-[var(--docs-border)] py-2 px-3 text-[var(--docs-text)];
 }
 
 .docs-prose td {
-  @apply text-sm border-b border-[var(--docs-border)] py-2 px-3;
+  @apply text-sm border-b border-[var(--docs-border)] py-2 px-3 text-[var(--docs-text-muted)];
 }
 
 .docs-prose code {
-  @apply font-mono text-[0.85em] px-1.5 py-0.5 rounded bg-[var(--docs-surface)] text-brand-500;
+  @apply font-mono text-[0.85em] px-1.5 py-0.5 rounded bg-[var(--docs-surface)] text-blue-400;
+}
+
+.docs-prose blockquote {
+  @apply border-l-4 border-[var(--docs-accent)] pl-4 my-6 text-[var(--docs-text-muted)] italic;
 }

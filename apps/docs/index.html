@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark" data-se-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/Seditor/favicon.svg" />
@@ -8,7 +8,37 @@
       name="description"
       content="Seditor — a beautiful, lightweight, framework-agnostic rich text editor built on Lexical."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <title>Seditor — Beautiful rich text editor</title>
+    <script>
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              var p = s.split("=", 2);
+              return (
+                decodeURIComponent(p[0]) +
+                (p[1]
+                  ? "=" + decodeURIComponent(p[1].replace(/~and~/g, "&"))
+                  : "")
+              );
+            })
+            .join("&");
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname + decoded + l.hash,
+          );
+        }
+      })(window.location);
+    </script>
   </head>
   <body>
     <div id="root"></div>

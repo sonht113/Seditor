@@ -37,24 +37,24 @@ function OutputPanel({ instance }: { instance: SeditorInstance | null }) {
 
   return (
     <div className="mt-4">
-      <div className="flex gap-2 mb-3">
+      <div className="mb-3 flex gap-2">
         <button
           onClick={showHtml}
           disabled={!instance}
-          className="rounded-lg border border-[var(--docs-border)] px-3 py-1.5 text-sm font-medium text-[var(--docs-text-muted)] hover:bg-[var(--docs-surface)] disabled:opacity-40 transition-colors"
+          className="cursor-pointer rounded-lg border border-[var(--docs-border)] px-3 py-1.5 text-sm font-medium text-[var(--docs-text-muted)] transition-colors hover:bg-[var(--docs-surface)] hover:text-[var(--docs-text)] disabled:opacity-40"
         >
           Get HTML
         </button>
         <button
           onClick={showJson}
           disabled={!instance}
-          className="rounded-lg border border-[var(--docs-border)] px-3 py-1.5 text-sm font-medium text-[var(--docs-text-muted)] hover:bg-[var(--docs-surface)] disabled:opacity-40 transition-colors"
+          className="cursor-pointer rounded-lg border border-[var(--docs-border)] px-3 py-1.5 text-sm font-medium text-[var(--docs-text-muted)] transition-colors hover:bg-[var(--docs-surface)] hover:text-[var(--docs-text)] disabled:opacity-40"
         >
           Get JSON
         </button>
       </div>
       {(html || json) && (
-        <pre className="rounded-xl bg-[#1e1e2e] text-gray-200 p-4 overflow-x-auto text-xs font-mono">
+        <pre className="overflow-x-auto rounded-xl bg-[var(--docs-code-bg)] p-4 font-mono text-xs text-gray-200">
           <code>{html || json}</code>
         </pre>
       )}
@@ -66,7 +66,7 @@ export function DemoEditor() {
   const [instance, setInstance] = useState<SeditorInstance | null>(null);
 
   return (
-    <div className="rounded-2xl border border-[var(--docs-border)] p-4 bg-[var(--docs-bg)]">
+    <div className="overflow-hidden rounded-2xl border border-[var(--docs-border)] bg-[var(--docs-bg)]">
       <Editor
         config={{
           html: INITIAL_HTML,
@@ -77,7 +77,9 @@ export function DemoEditor() {
       >
         <Toolbar />
       </Editor>
-      <OutputPanel instance={instance} />
+      <div className="border-t border-[var(--docs-border)] p-4">
+        <OutputPanel instance={instance} />
+      </div>
     </div>
   );
 }
