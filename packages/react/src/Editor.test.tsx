@@ -208,6 +208,115 @@ describe("Editor controlled content", () => {
   });
 });
 
+describe("Editor lifecycle and state", () => {
+  it("calls onFocus when the root receives focus", () => {
+    const onFocus = vi.fn();
+    render(<Editor onFocus={onFocus} />);
+    const root = document.querySelector(".se-root") as HTMLElement;
+    expect(root).not.toBeNull();
+    act(() => {
+      root.focus();
+    });
+    expect(onFocus).toHaveBeenCalled();
+  });
+
+  it("calls onBlur when the root loses focus", () => {
+    const onBlur = vi.fn();
+    render(<Editor onBlur={onBlur} />);
+    const root = document.querySelector(".se-root") as HTMLElement;
+    expect(root).not.toBeNull();
+    act(() => {
+      root.focus();
+    });
+    act(() => {
+      root.blur();
+    });
+    expect(onBlur).toHaveBeenCalled();
+  });
+
+  it("sets contentEditable=false when editable=false", () => {
+    render(<Editor editable={false} />);
+    const root = document.querySelector(".se-root");
+    expect(root?.getAttribute("contenteditable")).toBe("false");
+  });
+
+  it("updates contentEditable when editable prop changes", () => {
+    const { rerender } = render(<Editor editable={true} />);
+    expect(
+      document.querySelector(".se-root")?.getAttribute("contenteditable"),
+    ).toBe("true");
+    rerender(<Editor editable={false} />);
+    expect(
+      document.querySelector(".se-root")?.getAttribute("contenteditable"),
+    ).toBe("false");
+    rerender(<Editor editable={true} />);
+    expect(
+      document.querySelector(".se-root")?.getAttribute("contenteditable"),
+    ).toBe("true");
+  });
+
+  it("calls onEditableChange when editable prop changes", () => {
+    const onEditableChange = vi.fn();
+    const { rerender } = render(
+      <Editor editable={true} onEditableChange={onEditableChange} />,
+    );
+    onEditableChange.mockClear();
+    rerender(<Editor editable={false} onEditableChange={onEditableChange} />);
+    expect(onEditableChange).toHaveBeenCalledWith(false);
+    onEditableChange.mockClear();
+    rerender(<Editor editable={true} onEditableChange={onEditableChange} />);
+    expect(onEditableChange).toHaveBeenCalledWith(true);
+  });
+
+  it("renders placeholder prop", () => {
+    render(<Editor placeholder="Type something" />);
+    const placeholder = document.querySelector(".se-placeholder");
+    expect(placeholder?.textContent).toBe("Type something");
+  });
+
+  it("updates placeholder when prop changes", () => {
+    const { rerender } = render(<Editor placeholder="First" />);
+    expect(document.querySelector(".se-placeholder")?.textContent).toBe(
+      "First",
+    );
+    rerender(<Editor placeholder="Second" />);
+    expect(document.querySelector(".se-placeholder")?.textContent).toBe(
+      "Second",
+    );
+  });
+
+  it("falls back to config.placeholder for backward compat", () => {
+    render(<Editor config={{ placeholder: "From config" }} />);
+    expect(document.querySelector(".se-placeholder")?.textContent).toBe(
+      "From config",
+    );
+  });
+
+  it("calls onError when the editor throws", () => {
+    const onError = vi.fn();
+    let editor: LexicalEditor | null = null;
+    render(
+      <Editor
+        onError={onError}
+        onReady={(inst) => {
+          editor = inst.editor;
+        }}
+      />,
+    );
+    expect(editor).not.toBeNull();
+    act(() => {
+      editor!.update(() => {
+        throw new Error("kaboom");
+      });
+      editor!.read(() => {});
+    });
+    expect(onError).toHaveBeenCalled();
+    const arg = onError.mock.calls[0][0];
+    expect(arg).toBeInstanceOf(Error);
+    expect((arg as Error).message).toBe("kaboom");
+  });
+});
+
 describe("LinkTooltip", () => {
   it("does not render when closed", () => {
     render(

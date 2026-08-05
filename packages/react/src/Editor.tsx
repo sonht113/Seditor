@@ -45,6 +45,40 @@ export interface EditorProps {
    * Defaults to `"html"`.
    */
   valueFormat?: EditorValueFormat;
+
+  /**
+   * Called when the editor root receives focus.
+   */
+  onFocus?: (event: FocusEvent, instance: SeditorInstance) => void;
+
+  /**
+   * Called when the editor root loses focus. Any pending debounced
+   * `onChange` is flushed before `onBlur` fires.
+   */
+  onBlur?: (event: FocusEvent, instance: SeditorInstance) => void;
+
+  /**
+   * Called when the editor throws an internal error (Lexical onError).
+   */
+  onError?: (error: Error, instance: SeditorInstance) => void;
+
+  /**
+   * Controlled editable state. When this prop changes, `editor.setEditable`
+   * is called and the `contentEditable` attribute is updated. Defaults to
+   * `true`. Overrides `config.editable`.
+   */
+  editable?: boolean;
+
+  /**
+   * Called when the editable state changes (via prop or command).
+   */
+  onEditableChange?: (editable: boolean) => void;
+
+  /**
+   * Placeholder text shown when the editor is empty. Reactive — updating
+   * this prop re-renders the placeholder. Overrides `config.placeholder`.
+   */
+  placeholder?: string;
 }
 
 function readValue(instance: SeditorInstance, format: EditorValueFormat): string {
@@ -74,15 +108,35 @@ export function Editor({
   value,
   onChange,
   valueFormat = "html",
+  onFocus,
+  onBlur,
+  onError,
+  editable,
+  onEditableChange,
+  placeholder: placeholderProp,
 }: EditorProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const onReadyRef = useRef(onReady);
   onReadyRef.current = onReady;
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
+  const onFocusRef = useRef(onFocus);
+  onFocusRef.current = onFocus;
+  const onBlurRef = useRef(onBlur);
+  onBlurRef.current = onBlur;
+  const onErrorRef = useRef(onError);
+  onErrorRef.current = onError;
+  const onEditableChangeRef = useRef(onEditableChange);
+  onEditableChangeRef.current = onEditableChange;
   const valueFormatRef = useRef(valueFormat);
   valueFormatRef.current = valueFormat;
   const [isEmpty, setIsEmpty] = useState(true);
+  const [editableState, setEditableState] = useState(
+    editable ?? config?.editable ?? true,
+  );
+  const [placeholderState, setPlaceholderState] = useState(
+    placeholderProp ?? config?.placeholder ?? null,
+  );
 
   // Loop protection for controlled `value`:
   //  - lastInternalValueRef: the last value produced by the user typing
@@ -91,6 +145,18 @@ export function Editor({
   //    update listener can avoid echoing that update back via `onChange`.
   const lastInternalValueRef = useRef<string | undefined>(undefined);
   const isSettingFromPropRef = useRef(false);
+
+  // Debounce plumbing for `onChange`. Default (0) fires synchronously.
+  // `flushOnChange` is referenced by the blur handler in the mount effect.
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const flushOnChange = () => {
+    if (debounceTimerRef.current !== null) {
+      clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = null;
+      const last = lastInternalValueRef.current;
+      if (last !== undefined) onChangeRef.current?.(last, instance);
+    }
+  };
 
   // Resolve initial content once at mount. Priority:
   // value > defaultValue > config.html.
@@ -110,6 +176,13 @@ export function Editor({
       // Content is set below via the unified valueFormat path so JSON works
       // for initial content too.
       html: undefined,
+      // Placeholder and editable are managed reactively below.
+      placeholder: undefined,
+      editable: undefined,
+      // Pipe Lexical errors out through the `onError` prop.
+      onError: (error) => {
+        onErrorRef.current?.(error, inst);
+      },
     });
     if (initialContent !== undefined && initialContent !== "") {
       writeValue(inst, initialContent, valueFormat);
@@ -119,8 +192,9 @@ export function Editor({
 
   useEffect(() => {
     const editor = instance.editor;
-    if (!rootRef.current) return;
-    editor.setRootElement(rootRef.current);
+    const root = rootRef.current;
+    if (!root) return;
+    editor.setRootElement(root);
     onReadyRef.current?.(instance);
 
     const unregisterUpdate = editor.registerUpdateListener(
@@ -138,12 +212,41 @@ export function Editor({
       },
     );
 
+    // Focus / blur listeners on the contenteditable root. Use capture phase
+    // so we catch focus delegated from inner contentEditable children.
+    const handleFocus = (event: FocusEvent) => {
+      onFocusRef.current?.(event, instance);
+    };
+    const handleBlur = (event: FocusEvent) => {
+      // Flush any pending debounced onChange before blur fires.
+      flushOnChange();
+      onBlurRef.current?.(event, instance);
+    };
+    root.addEventListener("focus", handleFocus, true);
+    root.addEventListener("blur", handleBlur, true);
+
     return () => {
       unregisterUpdate();
+      root.removeEventListener("focus", handleFocus, true);
+      root.removeEventListener("blur", handleBlur, true);
       editor.setRootElement(null);
       instance.destroy();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [instance]);
+
+  // Reactive `editable` prop -> editor.setEditable + local state.
+  useEffect(() => {
+    const next = editable ?? config?.editable ?? true;
+    instance.editor.setEditable(next);
+    setEditableState(next);
+    onEditableChangeRef.current?.(next);
+  }, [editable, instance]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Reactive `placeholder` prop -> local state.
+  useEffect(() => {
+    setPlaceholderState(placeholderProp ?? config?.placeholder ?? null);
+  }, [placeholderProp, config?.placeholder]);
 
   // Sync controlled `value` prop -> editor content.
   useEffect(() => {
@@ -161,7 +264,10 @@ export function Editor({
     isSettingFromPropRef.current = false;
   }, [value, instance]);
 
-  const placeholder = instance.placeholder;
+  // Clear any pending debounce timer on unmount.
+  useEffect(() => () => flushOnChange(), []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const placeholder = placeholderState;
 
   return (
     <SeditorContext.Provider value={instance}>
@@ -176,7 +282,7 @@ export function Editor({
           <div
             ref={rootRef}
             className="se-root"
-            contentEditable={instance.editor.isEditable()}
+            contentEditable={editableState}
             suppressContentEditableWarning
           />
         </div>
