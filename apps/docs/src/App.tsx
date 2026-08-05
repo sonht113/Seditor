@@ -14,10 +14,7 @@ export default function App() {
     <div className="min-h-screen bg-[var(--docs-bg)]">
       <header className="sticky top-0 z-50 h-14 border-b border-[var(--docs-border)] bg-[var(--docs-bg)]/80 backdrop-blur-md">
         <div className="mx-auto flex h-full max-w-[1400px] items-center justify-between px-4 sm:px-6">
-          <a
-            href="/Seditor/"
-            className="flex items-center gap-2.5 no-underline"
-          >
+          <a href="/Seditor" className="flex items-center gap-2.5 no-underline">
             <Logo size={32} withWordmark />
           </a>
           <div className="flex items-center gap-3">
