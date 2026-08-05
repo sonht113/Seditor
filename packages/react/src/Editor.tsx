@@ -1,7 +1,9 @@
 import {
   createContext,
+  forwardRef,
   useContext,
   useEffect,
+  useImperativeHandle,
   useRef,
   useState,
   type ReactNode,
@@ -79,6 +81,36 @@ export interface EditorProps {
    * this prop re-renders the placeholder. Overrides `config.placeholder`.
    */
   placeholder?: string;
+
+  /**
+   * id for the contentEditable root. Useful for `<label htmlFor>` association.
+   */
+  id?: string;
+
+  /**
+   * Form field name. When set, a hidden `<input type="hidden" name={name}>`
+   * is rendered and kept in sync with the editor content (per `valueFormat`)
+   * so traditional form submission works.
+   */
+  name?: string;
+
+  /** Accessible label for the editor. */
+  ariaLabel?: string;
+
+  /** id of an element that labels the editor. */
+  ariaLabelledBy?: string;
+
+  /** id of an element that describes the editor. */
+  ariaDescribedBy?: string;
+
+  /** Controls spell-check on the contentEditable root. */
+  spellCheck?: boolean;
+
+  /** Focus the editor on mount. */
+  autoFocus?: boolean;
+
+  /** Tab order for the contentEditable root. */
+  tabIndex?: number;
 }
 
 function readValue(instance: SeditorInstance, format: EditorValueFormat): string {
@@ -99,22 +131,34 @@ function writeValue(
   }
 }
 
-export function Editor({
-  config,
-  className,
-  onReady,
-  children,
-  defaultValue,
-  value,
-  onChange,
-  valueFormat = "html",
-  onFocus,
-  onBlur,
-  onError,
-  editable,
-  onEditableChange,
-  placeholder: placeholderProp,
-}: EditorProps) {
+export const Editor = forwardRef<SeditorInstance, EditorProps>(
+  function Editor(
+    {
+      config,
+      className,
+      onReady,
+      children,
+      defaultValue,
+      value,
+      onChange,
+      valueFormat = "html",
+      onFocus,
+      onBlur,
+      onError,
+      editable,
+      onEditableChange,
+      placeholder: placeholderProp,
+      id,
+      name,
+      ariaLabel,
+      ariaLabelledBy,
+      ariaDescribedBy,
+      spellCheck,
+      autoFocus,
+      tabIndex,
+    },
+    ref,
+  ) {
   const rootRef = useRef<HTMLDivElement>(null);
   const onReadyRef = useRef(onReady);
   onReadyRef.current = onReady;
@@ -190,6 +234,15 @@ export function Editor({
     return inst;
   });
 
+  // Expose the SeditorInstance through the forwarded ref so consumers can
+  // use it with form libraries (e.g. react-hook-form Controller).
+  useImperativeHandle(ref, () => instance, [instance]);
+
+  // Hidden input value for traditional form submission (synced with content).
+  const [hiddenValue, setHiddenValue] = useState(
+    initialContent ?? "",
+  );
+
   useEffect(() => {
     const editor = instance.editor;
     const root = rootRef.current;
@@ -205,10 +258,14 @@ export function Editor({
         // Skip echoing back updates that we triggered ourselves while
         // applying a controlled `value` prop.
         if (isSettingFromPropRef.current) return;
-        if (!onChangeRef.current) return;
         const next = readValue(instance, valueFormatRef.current);
         lastInternalValueRef.current = next;
-        onChangeRef.current(next, instance);
+        // Keep the hidden input in sync before any debounce so a form
+        // submission always has the latest value.
+        setHiddenValue(next);
+        if (onChangeRef.current) {
+          onChangeRef.current(next, instance);
+        }
       },
     );
 
@@ -225,6 +282,10 @@ export function Editor({
     root.addEventListener("focus", handleFocus, true);
     root.addEventListener("blur", handleBlur, true);
 
+    if (autoFocus) {
+      editor.focus();
+    }
+
     return () => {
       unregisterUpdate();
       root.removeEventListener("focus", handleFocus, true);
@@ -233,7 +294,7 @@ export function Editor({
       instance.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [instance]);
+  }, [instance, autoFocus]);
 
   // Reactive `editable` prop -> editor.setEditable + local state.
   useEffect(() => {
@@ -262,6 +323,8 @@ export function Editor({
     // Flush pending update synchronously so subsequent reads are consistent.
     instance.editor.read(() => {});
     isSettingFromPropRef.current = false;
+    // Keep hidden input in sync with controlled value too.
+    setHiddenValue(value);
   }, [value, instance]);
 
   // Clear any pending debounce timer on unmount.
@@ -281,16 +344,28 @@ export function Editor({
           )}
           <div
             ref={rootRef}
+            id={id}
             className="se-root"
             contentEditable={editableState}
             suppressContentEditableWarning
+            role="textbox"
+            aria-multiline="true"
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            aria-describedby={ariaDescribedBy}
+            spellCheck={spellCheck}
+            tabIndex={tabIndex}
           />
         </div>
+        {name && (
+          <input type="hidden" name={name} value={hiddenValue} />
+        )}
         <LinkTooltip />
       </div>
     </SeditorContext.Provider>
   );
-}
+},
+);
 
 export function useEditor(): SeditorInstance {
   const instance = useContext(SeditorContext);

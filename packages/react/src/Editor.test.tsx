@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, act } from "@testing-library/react";
+import { createRef } from "react";
 import {
   $getRoot,
   $createParagraphNode,
@@ -8,6 +9,7 @@ import {
   type EditorState,
 } from "lexical";
 import { Editor, useEditor } from "./Editor";
+import type { SeditorInstance } from "seditor-core";
 import { Toolbar } from "./Toolbar";
 import { LinkTooltip } from "./LinkTooltip";
 import { SE_OPEN_LINK_COMMAND } from "seditor-core";
@@ -317,6 +319,107 @@ describe("Editor lifecycle and state", () => {
   });
 });
 
+describe("Editor ref and form integration", () => {
+  it("exposes SeditorInstance via ref", () => {
+    const ref = createRef<SeditorInstance>();
+    render(<Editor ref={ref} />);
+    expect(ref.current).not.toBeNull();
+    expect(ref.current?.getHTML).toBeDefined();
+    expect(ref.current?.commands).toBeDefined();
+    expect(ref.current?.editor).toBeDefined();
+  });
+
+  it("renders a hidden input when name is set", () => {
+    render(<Editor name="content" defaultValue="<p>Form value</p>" />);
+    const hidden = document.querySelector(
+      'input[type="hidden"][name="content"]',
+    ) as HTMLInputElement | null;
+    expect(hidden).not.toBeNull();
+    expect(hidden?.value).toContain("Form value");
+  });
+
+  it("keeps hidden input in sync with user edits", () => {
+    let editor: LexicalEditor | null = null;
+    render(
+      <Editor
+        name="content"
+        onReady={(inst) => {
+          editor = inst.editor;
+        }}
+      />,
+    );
+    act(() => {
+      editor!.update(() => {
+        const root = $getRoot();
+        root.clear();
+        const p = $createParagraphNode();
+        p.append($createTextNode("Edited"));
+        root.append(p);
+      });
+      editor!.read(() => {});
+    });
+    const hidden = document.querySelector(
+      'input[type="hidden"][name="content"]',
+    ) as HTMLInputElement | null;
+    expect(hidden?.value).toContain("Edited");
+  });
+
+  it("keeps hidden input in sync with controlled value", () => {
+    const { rerender } = render(<Editor name="content" value="<p>A</p>" />);
+    const hidden = document.querySelector(
+      'input[type="hidden"][name="content"]',
+    ) as HTMLInputElement | null;
+    expect(hidden?.value).toContain("<p>A</p>");
+    rerender(<Editor name="content" value="<p>B</p>" />);
+    const hidden2 = document.querySelector(
+      'input[type="hidden"][name="content"]',
+    ) as HTMLInputElement | null;
+    expect(hidden2?.value).toContain("<p>B</p>");
+  });
+
+  it("applies id to the contentEditable root", () => {
+    render(<Editor id="my-editor" />);
+    const root = document.querySelector(".se-root");
+    expect(root?.getAttribute("id")).toBe("my-editor");
+  });
+
+  it("applies aria-label to the contentEditable root", () => {
+    render(<Editor ariaLabel="Article body" />);
+    const root = document.querySelector(".se-root");
+    expect(root?.getAttribute("aria-label")).toBe("Article body");
+  });
+
+  it("applies spellCheck and tabIndex", () => {
+    render(<Editor spellCheck={false} tabIndex={-1} />);
+    const root = document.querySelector(".se-root");
+    expect(root?.getAttribute("spellcheck")).toBe("false");
+    expect(root?.getAttribute("tabindex")).toBe("-1");
+  });
+
+  it("sets role=textbox and aria-multiline=true", () => {
+    render(<Editor />);
+    const root = document.querySelector(".se-root");
+    expect(root?.getAttribute("role")).toBe("textbox");
+    expect(root?.getAttribute("aria-multiline")).toBe("true");
+  });
+});
+
+describe("Editor backward compat", () => {
+  it("renders with no props (fully uncontrolled)", () => {
+    render(<Editor />);
+    const root = document.querySelector(".se-root");
+    expect(root).not.toBeNull();
+    expect(root?.getAttribute("contenteditable")).toBe("true");
+  });
+
+  it("still works with config.html only", () => {
+    render(<Editor config={{ html: "<p>Legacy</p>" }} />);
+    expect(document.querySelector(".se-root")?.textContent).toContain(
+      "Legacy",
+    );
+  });
+});
+
 describe("LinkTooltip", () => {
   it("does not render when closed", () => {
     render(
@@ -328,6 +431,9 @@ describe("LinkTooltip", () => {
   });
 
   it("opens tooltip with input and buttons on SE_OPEN_LINK_COMMAND", () => {
+    // Clear any selection left by previous tests so the command handler
+    // doesn't try to read a stale range's getBoundingClientRect (jsdom).
+    window.getSelection()?.removeAllRanges();
     let editor: LexicalEditor | null = null;
     render(
       <Editor
