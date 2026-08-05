@@ -7,7 +7,7 @@ import {
   CONTROLLED_TEXT_INSERTION_COMMAND,
 } from "lexical";
 import { createSeditor } from "./createSeditor";
-import { getHTML, getJSON, setHTML } from "./serialization";
+import { getHTML, getJSON, setHTML, setJSON } from "./serialization";
 import {
   toggleBold,
   toggleHeading,
@@ -88,6 +88,46 @@ describe("serialization", () => {
     setHTML(instance.editor, "<p>Second</p>");
     expect(getHTML(instance.editor)).toContain("Second");
     expect(getHTML(instance.editor)).not.toContain("First");
+  });
+
+  it("setJSON round-trips with getJSON", () => {
+    const instance = seedEditor("<p>Hello <b>world</b></p>");
+    const json = getJSON(instance.editor);
+    setJSON(instance.editor, json);
+    const html = getHTML(instance.editor);
+    expect(html).toContain("Hello");
+    expect(html).toContain("world");
+  });
+
+  it("setJSON accepts a JSON string", () => {
+    const instance = seedEditor("<p>Original</p>");
+    const json = JSON.stringify(getJSON(instance.editor));
+    setJSON(instance.editor, json);
+    expect(getHTML(instance.editor)).toContain("Original");
+  });
+
+  it("instance.setJSON replaces content", () => {
+    const instance = seedEditor("<p>First</p>");
+    const json = getJSON(instance.editor);
+    setHTML(instance.editor, "<p>Other</p>");
+    instance.setJSON(json);
+    expect(getHTML(instance.editor)).toContain("First");
+    expect(getHTML(instance.editor)).not.toContain("Other");
+  });
+});
+
+describe("onError config", () => {
+  it("invokes config.onError when an update throws", () => {
+    const onError = vi.fn();
+    const instance = createSeditor({ onError });
+    instance.editor.update(() => {
+      throw new Error("boom");
+    });
+    instance.editor.read(() => {});
+    expect(onError).toHaveBeenCalled();
+    const arg = onError.mock.calls[0][0];
+    expect(arg).toBeInstanceOf(Error);
+    expect((arg as Error).message).toBe("boom");
   });
 });
 

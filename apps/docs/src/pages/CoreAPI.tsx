@@ -6,6 +6,7 @@ const instance = createSeditor({
   namespace: "my-editor",
   html: "<p>Initial content</p>",
   editable: true,
+  onError: (error) => console.error("editor error", error),
 });
 
 instance.commands.toggleBold();
@@ -15,7 +16,8 @@ instance.commands.setLink("https://example.com");
 instance.commands.undo();
 
 instance.getHTML(); // -> "<p>...</p>"
-instance.getJSON(); // -> Lexical EditorState JSON`;
+instance.getJSON(); // -> Lexical EditorState JSON
+instance.setJSON(jsonState); // replace content from JSON (SSR-safe)`;
 
 const PLUGIN_CODE = `import type { SeditorPlugin } from "seditor-core";
 
@@ -80,7 +82,12 @@ const METHODS = [
   },
   {
     method: "setHTML(html)",
-    desc: "Replace editor content from HTML",
+    desc: "Replace editor content from HTML (uses DOMParser — browser only)",
+    returns: "void",
+  },
+  {
+    method: "setJSON(json)",
+    desc: "Replace editor content from JSON EditorState (SSR-safe, no DOMParser)",
     returns: "void",
   },
   {
@@ -199,6 +206,15 @@ export function CoreAPI() {
             <td>
               <code>true</code>
             </td>
+          </tr>
+          <tr>
+            <td>
+              <code>onError</code>
+            </td>
+            <td>
+              <code>(error: Error) =&gt; void</code>
+            </td>
+            <td>—</td>
           </tr>
         </tbody>
       </table>

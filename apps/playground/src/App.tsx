@@ -88,8 +88,25 @@ function DarkToggle() {
   );
 }
 
+function ModeToggle({
+  controlled,
+  onToggle,
+}: {
+  controlled: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <button className="theme-toggle" onClick={onToggle}>
+      {controlled ? "↺ Switch to Uncontrolled" : "→ Switch to Controlled"}
+    </button>
+  );
+}
+
 export default function App() {
   const [instance, setInstance] = useState<SeditorInstance | null>(null);
+  const [controlled, setControlled] = useState(false);
+  const [html, setHtml] = useState(INITIAL_HTML);
+
   return (
     <div className="app">
       <header className="app-header">
@@ -100,20 +117,55 @@ export default function App() {
             <p>Beautiful, lightweight rich text editor</p>
           </div>
         </div>
-        <DarkToggle />
+        <div style={{ display: "flex", gap: 8 }}>
+          <ModeToggle
+            controlled={controlled}
+            onToggle={() => setControlled((c) => !c)}
+          />
+          <DarkToggle />
+        </div>
       </header>
       <main className="app-main">
-        <Editor
-          config={{
-            html: INITIAL_HTML,
-            placeholder: "Start writing...",
-            plugins: [createImagePlugin({ uploadHandler: demoUploadHandler })],
-          }}
-          onReady={setInstance}
-        >
-          <Toolbar />
-        </Editor>
+        {controlled ? (
+          <Editor
+            value={html}
+            onChange={setHtml}
+            placeholder="Start writing..."
+            config={{
+              plugins: [
+                createImagePlugin({ uploadHandler: demoUploadHandler }),
+              ],
+            }}
+            onReady={setInstance}
+          >
+            <Toolbar />
+          </Editor>
+        ) : (
+          <Editor
+            config={{
+              html: INITIAL_HTML,
+              placeholder: "Start writing...",
+              plugins: [
+                createImagePlugin({ uploadHandler: demoUploadHandler }),
+              ],
+            }}
+            onChange={setHtml}
+            onReady={setInstance}
+          >
+            <Toolbar />
+          </Editor>
+        )}
         <OutputPanel instance={instance} />
+        {controlled && (
+          <div className="output">
+            <div className="output-actions">
+              <span>Controlled value (live):</span>
+            </div>
+            <pre>
+              <code>{html}</code>
+            </pre>
+          </div>
+        )}
       </main>
     </div>
   );

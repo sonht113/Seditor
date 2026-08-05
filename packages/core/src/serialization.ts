@@ -41,3 +41,20 @@ export function setHTML(editor: LexicalEditor, html: string): void {
     $insertNodes(nodes);
   });
 }
+
+/**
+ * Replace the editor's content from a JSON-serializable EditorState object
+ * (as produced by `getJSON`) or a JSON string.
+ *
+ * Unlike `setHTML`, this does not rely on `DOMParser`, so it is safe to call
+ * in non-browser environments (Node.js / SSR).
+ *
+ * **Note:** Replaces the entire EditorState, which resets the undo/redo
+ * history. Call `editor.read(() => {})` afterwards to flush pending updates
+ * if you need to read the content synchronously.
+ */
+export function setJSON(editor: LexicalEditor, json: unknown): void {
+  const serialized = typeof json === "string" ? json : JSON.stringify(json);
+  const editorState = editor.parseEditorState(serialized);
+  editor.setEditorState(editorState);
+}
