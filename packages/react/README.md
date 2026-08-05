@@ -75,38 +75,34 @@ export function Form() {
 ### JSON format
 
 ```tsx
-<Editor
-  valueFormat="json"
-  value={jsonString}
-  onChange={setJsonString}
-/>
+<Editor valueFormat="json" value={jsonString} onChange={setJsonString} />
 ```
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `config` | `SeditorConfig` | — | Initial-only config (plugins, theme, namespace, shortcuts). |
-| `value` | `string` | — | Controlled content (HTML or JSON per `valueFormat`). |
-| `defaultValue` | `string` | — | Initial content (uncontrolled). |
-| `onChange` | `(value, instance) => void` | — | Fired on each content change. |
-| `onChangeDebounceMs` | `number` | `0` | Debounce delay for `onChange`. |
-| `valueFormat` | `"html" \| "json"` | `"html"` | Serialization format for `value`/`onChange`. |
-| `onReady` | `(instance) => void` | — | Called once after mount. |
-| `onFocus` / `onBlur` | `(event, instance) => void` | — | Focus/blur lifecycle. |
-| `onError` | `(error, instance) => void` | — | Lexical error handler. |
-| `editable` | `boolean` | `true` | Controlled editable state (reactive). |
-| `onEditableChange` | `(editable) => void` | — | Fired when editable changes. |
-| `placeholder` | `string` | — | Placeholder text (reactive). |
-| `name` | `string` | — | Form field name (renders hidden input). |
-| `id` | `string` | — | id for the contentEditable root. |
-| `ariaLabel` / `ariaLabelledBy` / `ariaDescribedBy` | `string` | — | A11y attributes. |
-| `spellCheck` | `boolean` | — | Spell-check on the root. |
-| `autoFocus` | `boolean` | — | Focus on mount. |
-| `tabIndex` | `number` | — | Tab order. |
-| `ref` | `Ref<SeditorInstance>` | — | Imperative instance. |
-| `className` | `string` | `"se-editor"` | Wrapper class. |
-| `children` | `ReactNode` | — | Toolbar, etc. |
+| Prop                                               | Type                        | Default       | Description                                                 |
+| -------------------------------------------------- | --------------------------- | ------------- | ----------------------------------------------------------- |
+| `config`                                           | `SeditorConfig`             | —             | Initial-only config (plugins, theme, namespace, shortcuts). |
+| `value`                                            | `string`                    | —             | Controlled content (HTML or JSON per `valueFormat`).        |
+| `defaultValue`                                     | `string`                    | —             | Initial content (uncontrolled).                             |
+| `onChange`                                         | `(value, instance) => void` | —             | Fired on each content change.                               |
+| `onChangeDebounceMs`                               | `number`                    | `0`           | Debounce delay for `onChange`.                              |
+| `valueFormat`                                      | `"html" \| "json"`          | `"html"`      | Serialization format for `value`/`onChange`.                |
+| `onReady`                                          | `(instance) => void`        | —             | Called once after mount.                                    |
+| `onFocus` / `onBlur`                               | `(event, instance) => void` | —             | Focus/blur lifecycle.                                       |
+| `onError`                                          | `(error, instance) => void` | —             | Lexical error handler.                                      |
+| `editable`                                         | `boolean`                   | `true`        | Controlled editable state (reactive).                       |
+| `onEditableChange`                                 | `(editable) => void`        | —             | Fired when editable changes.                                |
+| `placeholder`                                      | `string`                    | —             | Placeholder text (reactive).                                |
+| `name`                                             | `string`                    | —             | Form field name (renders hidden input).                     |
+| `id`                                               | `string`                    | —             | id for the contentEditable root.                            |
+| `ariaLabel` / `ariaLabelledBy` / `ariaDescribedBy` | `string`                    | —             | A11y attributes.                                            |
+| `spellCheck`                                       | `boolean`                   | —             | Spell-check on the root.                                    |
+| `autoFocus`                                        | `boolean`                   | —             | Focus on mount.                                             |
+| `tabIndex`                                         | `number`                    | —             | Tab order.                                                  |
+| `ref`                                              | `Ref<SeditorInstance>`      | —             | Imperative instance.                                        |
+| `className`                                        | `string`                    | `"se-editor"` | Wrapper class.                                              |
+| `children`                                         | `ReactNode`                 | —             | Toolbar, etc.                                               |
 
 See the [main README](https://github.com/seditor/seditor#readme) for full API docs.
 

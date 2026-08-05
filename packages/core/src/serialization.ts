@@ -1,9 +1,5 @@
 import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
-import {
-  $getRoot,
-  $insertNodes,
-  type LexicalEditor,
-} from "lexical";
+import { $getRoot, $insertNodes, type LexicalEditor } from "lexical";
 
 /**
  * Serialize the editor's content to an HTML string.
@@ -58,8 +54,7 @@ export function setHTML(editor: LexicalEditor, html: string): void {
  * if you need to read the content synchronously.
  */
 export function setJSON(editor: LexicalEditor, json: unknown): void {
-  const serialized =
-    typeof json === "string" ? json : JSON.stringify(json);
+  const serialized = typeof json === "string" ? json : JSON.stringify(json);
   const editorState = editor.parseEditorState(serialized);
   editor.setEditorState(editorState);
 }

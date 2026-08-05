@@ -322,8 +322,8 @@ export function ReactAPI() {
 
       <h3>Controlled usage</h3>
       <p>
-        Pass <code>value</code> and <code>onChange</code> to use the editor as
-        a controlled component. The editor content is replaced whenever{" "}
+        Pass <code>value</code> and <code>onChange</code> to use the editor as a
+        controlled component. The editor content is replaced whenever{" "}
         <code>value</code> changes (and differs from what the user just typed,
         to avoid loops).
       </p>
