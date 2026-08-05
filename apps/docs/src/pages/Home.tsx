@@ -174,7 +174,7 @@ export function Home() {
         <div className="flex items-center justify-center gap-3">
           <Link
             to="/quick-start"
-            className="cursor-pointer rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-semibold text-white! transition-colors hover:bg-brand-600"
+            className="cursor-pointer rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-semibold !text-white transition-colors hover:bg-brand-600"
           >
             Get Started
           </Link>
