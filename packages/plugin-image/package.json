@@ -1,6 +1,6 @@
 {
   "name": "seditor-plugin-image",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Image plugin for Seditor.",
   "license": "MIT",
   "type": "module",

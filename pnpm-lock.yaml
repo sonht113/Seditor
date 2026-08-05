@@ -66,17 +66,17 @@ importers:
         specifier: ^6.26.0
         version: 6.30.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       seditor-core:
-        specifier: 1.0.0
-        version: 1.0.0(lexical@0.49.0(typescript@5.9.3))(typescript@5.9.3)
+        specifier: workspace:*
+        version: link:../../packages/core
       seditor-plugin-image:
-        specifier: 1.0.0
-        version: 1.0.0(lexical@0.49.0(typescript@5.9.3))(typescript@5.9.3)
+        specifier: workspace:*
+        version: link:../../packages/plugin-image
       seditor-react:
-        specifier: 1.0.0
-        version: 1.0.0(lexical@0.49.0(typescript@5.9.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
+        specifier: workspace:*
+        version: link:../../packages/react
       seditor-theme:
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: workspace:*
+        version: link:../../packages/theme-default
     devDependencies:
       '@types/react':
         specifier: ^18.3.0
@@ -2861,26 +2861,6 @@ packages:
 
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
-
-  seditor-core@1.0.0:
-    resolution: {integrity: sha512-acqhudbb073Dq5OQ6cJWNkVkYZHKDt3uKW3ylYpv/1d3BUI8x06EzF+RwR9atMAzd5PHg5f86PQeE56rv6pW9w==}
-    peerDependencies:
-      lexical: ^0.49.0
-
-  seditor-plugin-image@1.0.0:
-    resolution: {integrity: sha512-W87qC9SZe6d4218wr5BHjjWZzotNos+eU0bulGu9VQKb2+C02UjWe6f6kECz9NzGO0531gB1dh4JbyWe+yVg6w==}
-    peerDependencies:
-      lexical: ^0.49.0
-
-  seditor-react@1.0.0:
-    resolution: {integrity: sha512-wFZJAyJyFd8E/55xUkhcTCabGDDtJnY0T0DZzlO68MGNb3ePhIANpHAXRBrKybMcGhUfyymJCTnDNWqQxtlAfQ==}
-    peerDependencies:
-      lexical: ^0.49.0
-      react: ^18.0.0
-      react-dom: ^18.0.0
-
-  seditor-theme@1.0.0:
-    resolution: {integrity: sha512-cjN8h4dtIkM+OfmSkZuaVi6xLBmsZ20e50WwSX+A/vv6mQLE7uPHPV9rKnDjS4uaYTS+hDCYfP03RHHNCUR5rg==}
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
@@ -6162,36 +6142,6 @@ snapshots:
   scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
-
-  seditor-core@1.0.0(lexical@0.49.0(typescript@5.9.3))(typescript@5.9.3):
-    dependencies:
-      '@lexical/history': 0.49.0(typescript@5.9.3)
-      '@lexical/html': 0.49.0(typescript@5.9.3)
-      '@lexical/link': 0.49.0(typescript@5.9.3)
-      '@lexical/list': 0.49.0(typescript@5.9.3)
-      '@lexical/rich-text': 0.49.0(typescript@5.9.3)
-      '@lexical/selection': 0.49.0(typescript@5.9.3)
-      lexical: 0.49.0(typescript@5.9.3)
-    transitivePeerDependencies:
-      - typescript
-
-  seditor-plugin-image@1.0.0(lexical@0.49.0(typescript@5.9.3))(typescript@5.9.3):
-    dependencies:
-      lexical: 0.49.0(typescript@5.9.3)
-      seditor-core: 1.0.0(lexical@0.49.0(typescript@5.9.3))(typescript@5.9.3)
-    transitivePeerDependencies:
-      - typescript
-
-  seditor-react@1.0.0(lexical@0.49.0(typescript@5.9.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3):
-    dependencies:
-      lexical: 0.49.0(typescript@5.9.3)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      seditor-core: 1.0.0(lexical@0.49.0(typescript@5.9.3))(typescript@5.9.3)
-    transitivePeerDependencies:
-      - typescript
-
-  seditor-theme@1.0.0: {}
 
   semver@6.3.1: {}
 

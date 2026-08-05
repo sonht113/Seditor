@@ -11,10 +11,10 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "seditor-core": "1.0.0",
-    "seditor-react": "1.0.0",
-    "seditor-theme": "1.0.0",
-    "seditor-plugin-image": "1.0.0",
+    "seditor-core": "workspace:*",
+    "seditor-react": "workspace:*",
+    "seditor-theme": "workspace:*",
+    "seditor-plugin-image": "workspace:*",
     "lexical": "^0.49.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",

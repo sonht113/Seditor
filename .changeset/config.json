@@ -1,13 +1,10 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "sonht113/Seditor" }],
+  "changelog": false,
   "commit": false,
   "fixed": [],
   "linked": [],
   "access": "public",
   "baseBranch": "master",
-  "updateInternalDependencies": {
-    "ignore": ["seditor-playground"]
-  },
-  "ignore": ["seditor-playground"]
+  "ignore": ["seditor-docs", "seditor-playground"]
 }
