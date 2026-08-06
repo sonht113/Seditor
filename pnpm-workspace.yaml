@@ -9,3 +9,4 @@ minimumReleaseAgeExclude:
   - seditor-plugin-image@1.0.0
   - seditor-react@1.0.0
   - seditor-theme@1.0.0
+  - seditor-vue@1.0.0

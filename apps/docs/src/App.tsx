@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { QuickStart } from "./pages/QuickStart";
 import { CoreAPI } from "./pages/CoreAPI";
 import { ReactAPI } from "./pages/ReactAPI";
+import { VueAPI } from "./pages/VueAPI";
 import { Theming } from "./pages/Theming";
 import { ImagePlugin } from "./pages/ImagePlugin";
 import { Demo } from "./pages/Demo";
@@ -47,6 +48,7 @@ export default function App() {
               <Route path="/quick-start" element={<QuickStart />} />
               <Route path="/core-api" element={<CoreAPI />} />
               <Route path="/react-api" element={<ReactAPI />} />
+              <Route path="/vue-api" element={<VueAPI />} />
               <Route path="/theming" element={<Theming />} />
               <Route path="/image-plugin" element={<ImagePlugin />} />
               <Route path="/demo" element={<Demo />} />

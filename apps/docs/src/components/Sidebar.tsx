@@ -19,6 +19,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
     items: [
       { to: "/core-api", label: "Core API" },
       { to: "/react-api", label: "React API" },
+      { to: "/vue-api", label: "Vue API" },
       { to: "/theming", label: "Theming" },
       { to: "/image-plugin", label: "Image Plugin" },
     ],

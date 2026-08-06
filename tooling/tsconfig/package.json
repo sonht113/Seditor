@@ -8,6 +8,7 @@
   ],
   "exports": {
     "./base.json": "./base.json",
-    "./react.json": "./react.json"
+    "./react.json": "./react.json",
+    "./vue.json": "./vue.json"
   }
 }
