@@ -59,9 +59,7 @@ export function createImagePlugin(config?: ImagePluginConfig): SeditorPlugin {
     const unregisterInsert = editor.registerCommand(
       INSERT_IMAGE_COMMAND,
       (payload: ImagePayload) => {
-        editor.update(() => {
-          $insertNodes([$createImageNode(payload)]);
-        });
+        $insertNodes([$createImageNode(payload)]);
         return true;
       },
       0,
@@ -82,15 +80,13 @@ export function createImagePlugin(config?: ImagePluginConfig): SeditorPlugin {
         const sel = $getSelection();
         if (!$isNodeSelection(sel)) return false;
         let handled = false;
-        editor.update(() => {
-          for (const key of sel._nodes) {
-            const node = $getNodeByKey(key);
-            if ($isImageNode(node)) {
-              node.setAlign(align);
-              handled = true;
-            }
+        for (const key of sel._nodes) {
+          const node = $getNodeByKey(key);
+          if ($isImageNode(node)) {
+            node.setAlign(align);
+            handled = true;
           }
-        });
+        }
         return handled;
       },
       0,
@@ -185,14 +181,12 @@ export function createImagePlugin(config?: ImagePluginConfig): SeditorPlugin {
             try {
               const json = JSON.parse(raw) as SerializedImageNode;
               const sourceKey = draggedNodeKey;
-              editor.update(() => {
-                if (dropSelection) $setSelection(dropSelection);
-                $insertNodes([$createImageNode(json)]);
-                if (sourceKey) {
-                  const original = $getNodeByKey(sourceKey);
-                  if ($isImageNode(original)) original.remove();
-                }
-              });
+              if (dropSelection) $setSelection(dropSelection);
+              $insertNodes([$createImageNode(json)]);
+              if (sourceKey) {
+                const original = $getNodeByKey(sourceKey);
+                if ($isImageNode(original)) original.remove();
+              }
               draggedNodeKey = null;
               return true;
             } catch {

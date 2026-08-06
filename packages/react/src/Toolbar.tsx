@@ -109,6 +109,11 @@ export function Toolbar({ items, className }: ToolbarProps) {
             aria-pressed={active}
             disabled={!enabled}
             className={`se-toolbar-button${active ? " se-toolbar-button-active" : ""}`}
+            onMouseDown={(event) => {
+              // Keep the editor focused so image node-selection / text range
+              // selection survives while the toolbar button is clicked.
+              event.preventDefault();
+            }}
             onClick={() => handleClick(item)}
             dangerouslySetInnerHTML={
               item.icon ? { __html: item.icon } : undefined
