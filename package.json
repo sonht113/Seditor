@@ -51,6 +51,17 @@
         "lexical",
         "seditor-core"
       ]
+    },
+    {
+      "name": "seditor-vue",
+      "path": "packages/vue/dist/index.js",
+      "limit": "10 KB",
+      "gzip": true,
+      "ignore": [
+        "lexical",
+        "vue",
+        "seditor-core"
+      ]
     }
   ],
   "scripts": {

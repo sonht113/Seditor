@@ -42,7 +42,7 @@ const FEATURES = [
   },
   {
     title: "Framework-agnostic core",
-    desc: "seditor-core has zero React dependency. Build your own bindings.",
+    desc: "Official React and Vue 3 bindings, or build your own.",
     icon: (
       <svg
         width="20"
@@ -131,6 +131,11 @@ const PACKAGES = [
     name: "seditor-react",
     desc: "React bindings: <Editor>, <Toolbar>, useEditor()",
     size: "~5 KB",
+  },
+  {
+    name: "seditor-vue",
+    desc: "Vue 3 bindings: <Editor>, <Toolbar>, useEditor()",
+    size: "~6 KB",
   },
   {
     name: "seditor-theme",

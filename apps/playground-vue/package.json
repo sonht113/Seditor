@@ -1,0 +1,27 @@
+{
+  "name": "seditor-playground-vue",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "seditor-core": "workspace:*",
+    "seditor-vue": "workspace:*",
+    "seditor-theme": "workspace:*",
+    "seditor-plugin-image": "workspace:*",
+    "lexical": "^0.49.0",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "seditor-tsconfig": "workspace:*",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "vite": "^5.4.0",
+    "vue-tsc": "^2.0.0"
+  }
+}

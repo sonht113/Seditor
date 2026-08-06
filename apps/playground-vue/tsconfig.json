@@ -1,0 +1,7 @@
+{
+  "extends": "seditor-tsconfig/vue.json",
+  "compilerOptions": {
+    "types": ["vue"]
+  },
+  "include": ["src"]
+}
