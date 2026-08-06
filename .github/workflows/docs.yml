@@ -32,6 +32,8 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - run: pnpm build
+
       - run: pnpm --filter seditor-docs build
 
       - name: Upload artifact

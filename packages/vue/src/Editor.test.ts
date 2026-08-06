@@ -31,6 +31,7 @@ function mountEditor(options?: any) {
 }
 
 afterEach(() => {
+  vi.useRealTimers();
   document.body.innerHTML = "";
 });
 
