@@ -636,6 +636,18 @@ describe("Editor backward compat", () => {
   });
 });
 
+describe("Toolbar", () => {
+  it("excludes items by id", () => {
+    mountEditor({
+      slots: { default: () => h(Toolbar, { exclude: ["underline", "redo"] }) },
+    });
+    expect(document.querySelector('[aria-label="Underline"]')).toBeNull();
+    expect(document.querySelector('[aria-label="Redo"]')).toBeNull();
+    expect(document.querySelector('[aria-label="Bold"]')).not.toBeNull();
+    expect(document.querySelector('[aria-label="Undo"]')).not.toBeNull();
+  });
+});
+
 describe("LinkTooltip", () => {
   it("does not render when closed", () => {
     mountEditor({

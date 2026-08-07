@@ -13,6 +13,7 @@ import type { SeditorInstance } from "seditor-core";
 import { Toolbar } from "./Toolbar";
 import { LinkTooltip } from "./LinkTooltip";
 import { SE_OPEN_LINK_COMMAND } from "seditor-core";
+import { defaultToolbarItems } from "./defaultToolbar";
 
 describe("Editor onChangeDebounceMs", () => {
   it("fires onChange synchronously when debounce is 0 (default)", () => {
@@ -182,6 +183,36 @@ describe("Editor", () => {
     expect(screen.getByLabelText("Bold")).toBeDefined();
     expect(screen.getByLabelText("Italic")).toBeDefined();
     expect(screen.getByLabelText("Undo")).toBeDefined();
+  });
+});
+
+describe("Toolbar", () => {
+  it("excludes items by id", () => {
+    render(
+      <Editor>
+        <Toolbar exclude={["underline", "redo"]} />
+      </Editor>,
+    );
+    expect(screen.queryByLabelText("Underline")).toBeNull();
+    expect(screen.queryByLabelText("Redo")).toBeNull();
+    expect(screen.getByLabelText("Bold")).toBeDefined();
+    expect(screen.getByLabelText("Undo")).toBeDefined();
+  });
+
+  it("excludes items from a custom items array", () => {
+    const items = [
+      defaultToolbarItems.find((i) => i.id === "bold")!,
+      defaultToolbarItems.find((i) => i.id === "italic")!,
+      defaultToolbarItems.find((i) => i.id === "underline")!,
+    ];
+    render(
+      <Editor>
+        <Toolbar items={items} exclude={["bold"]} />
+      </Editor>,
+    );
+    expect(screen.queryByLabelText("Bold")).toBeNull();
+    expect(screen.getByLabelText("Italic")).toBeDefined();
+    expect(screen.getByLabelText("Underline")).toBeDefined();
   });
 });
 

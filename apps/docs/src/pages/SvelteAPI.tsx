@@ -66,6 +66,35 @@ const CUSTOM_TOOLBAR_CODE = `<script>
   <Toolbar items={minimalItems} />
 </Editor>`;
 
+const EXCLUDE_TOOLBAR_CODE = `<script>
+  import { Editor, Toolbar } from "seditor-svelte";
+</script>
+
+<Editor config={{ placeholder: "Start writing..." }}>
+  <Toolbar exclude={["underline", "strikethrough", "redo"]} />
+</Editor>`;
+
+const TOOLBAR_PROPS = [
+  {
+    prop: "items",
+    type: "ToolbarItem[]",
+    desc: "Custom toolbar items. Omit to use defaults + plugin items.",
+    default: "defaultToolbarItems",
+  },
+  {
+    prop: "exclude",
+    type: "string[]",
+    desc: "Ids of toolbar items to hide. Works with both default and custom items.",
+    default: "—",
+  },
+  {
+    prop: "className",
+    type: "string",
+    desc: "Custom class for the toolbar wrapper.",
+    default: '"se-toolbar"',
+  },
+];
+
 export function SvelteAPI() {
   return (
     <div className="docs-prose">
@@ -108,6 +137,44 @@ export function SvelteAPI() {
         lang="svelte"
         filename="App.svelte"
       />
+
+      <h2>Hide toolbar items</h2>
+      <p>
+        Pass an array of item <code>id</code>s to the <code>exclude</code> prop to hide them. This keeps the default items and plugin items intact.
+      </p>
+      <CodeBlock
+        code={EXCLUDE_TOOLBAR_CODE}
+        lang="svelte"
+        filename="App.svelte"
+      />
+
+      <h2>Toolbar props</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          {TOOLBAR_PROPS.map((p) => (
+            <tr key={p.prop}>
+              <td>
+                <code>{p.prop}</code>
+              </td>
+              <td>
+                <code>{p.type}</code>
+              </td>
+              <td>{p.desc}</td>
+              <td>
+                <code>{p.default}</code>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
       <h2>Props</h2>
       <table>

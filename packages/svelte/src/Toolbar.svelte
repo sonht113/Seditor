@@ -7,6 +7,7 @@
   import {
     SE_OPEN_IMAGE_COMMAND,
     SE_OPEN_LINK_COMMAND,
+    filterToolbarItems,
   } from "seditor-core";
   import type { ToolbarItem } from "seditor-core";
   import { useEditor } from "./context";
@@ -15,6 +16,7 @@
   import FontSizePicker from "./FontSizePicker.svelte";
 
   export let items: ToolbarItem[] | undefined = undefined;
+  export let exclude: string[] | undefined = undefined;
   export let className = "se-toolbar";
 
   const instance = useEditor();
@@ -24,7 +26,10 @@
     tick += 1;
   }
 
-  $: allItems = items ?? [...defaultToolbarItems, ...instance.toolbarItems];
+  $: allItems = filterToolbarItems(
+    items ?? [...defaultToolbarItems, ...instance.toolbarItems],
+    exclude,
+  );
 
   function handleClick(item: ToolbarItem): void {
     if (item.command === "setLink") {

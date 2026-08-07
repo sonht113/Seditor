@@ -5,20 +5,26 @@ import { useEditor } from "./Editor";
 import { defaultToolbarItems } from "./defaultToolbar";
 import { ColorPicker } from "./ColorPicker";
 import { FontSizePicker } from "./FontSizePicker";
+import { filterToolbarItems } from "seditor-core";
 import type { ToolbarItem } from "seditor-core";
 
 export interface ToolbarProps {
   items?: ToolbarItem[];
+  exclude?: string[];
   className?: string;
 }
 
-export function Toolbar({ items, className }: ToolbarProps) {
+export function Toolbar({ items, exclude, className }: ToolbarProps) {
   const instance = useEditor();
   const [, force] = useState(0);
 
   const allItems = useMemo(
-    () => items ?? [...defaultToolbarItems, ...instance.toolbarItems],
-    [items, instance.toolbarItems],
+    () =>
+      filterToolbarItems(
+        items ?? [...defaultToolbarItems, ...instance.toolbarItems],
+        exclude,
+      ),
+    [items, exclude, instance.toolbarItems],
   );
 
   useEffect(() => {

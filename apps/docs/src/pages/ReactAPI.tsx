@@ -110,6 +110,16 @@ export function App() {
   );
 }`;
 
+const EXCLUDE_TOOLBAR_CODE = `import { Editor, Toolbar } from "seditor-react";
+
+export function App() {
+  return (
+    <Editor config={{ placeholder: "Start writing..." }}>
+      <Toolbar exclude={["underline", "strikethrough", "redo"]} />
+    </Editor>
+  );
+}`;
+
 const EDITOR_PROPS = [
   {
     prop: "config",
@@ -265,6 +275,12 @@ const TOOLBAR_PROPS = [
     default: "defaultToolbarItems",
   },
   {
+    prop: "exclude",
+    type: "string[]",
+    desc: "Ids of toolbar items to hide. Works with both default and custom items.",
+    default: "—",
+  },
+  {
     prop: "className",
     type: "string",
     desc: "Custom class for the toolbar wrapper",
@@ -392,6 +408,12 @@ export function ReactAPI() {
         <code>ToolbarItem[]</code>) to the <code>items</code> prop.
       </p>
       <CodeBlock code={CUSTOM_TOOLBAR_CODE} lang="tsx" filename="App.tsx" />
+
+      <h2>Hide toolbar items</h2>
+      <p>
+        Pass an array of item <code>id</code>s to the <code>exclude</code> prop to hide them. This keeps the default items and plugin items intact.
+      </p>
+      <CodeBlock code={EXCLUDE_TOOLBAR_CODE} lang="tsx" filename="App.tsx" />
 
       <h2>Exports</h2>
       <table>
