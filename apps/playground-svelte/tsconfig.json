@@ -1,0 +1,7 @@
+{
+  "extends": "seditor-tsconfig/svelte.json",
+  "compilerOptions": {
+    "types": ["svelte"]
+  },
+  "include": ["src"]
+}

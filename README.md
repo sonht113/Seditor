@@ -6,8 +6,8 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Seditor is a Notion-like, easy-to-configure rich text editor. The core is
-framework-agnostic (TypeScript, no React), with first-class React and Vue
-bindings and a default theme. Svelte bindings are planned.
+framework-agnostic (TypeScript, no React), with first-class React, Vue and
+Svelte bindings and a default theme.
 
 ## Why Seditor?
 
@@ -53,6 +53,7 @@ export function App() {
 | `seditor-core`         | Framework-agnostic core (Lexical wrapper + commands)   | ~35 KB      | [![seditor-core downloads](https://img.shields.io/npm/dm/seditor-core.svg?label=%20)](https://www.npmjs.com/package/seditor-core)                         |
 | `seditor-react`        | React bindings: `<Editor>`, `<Toolbar>`, `useEditor()` | ~5 KB       | [![seditor-react downloads](https://img.shields.io/npm/dm/seditor-react.svg?label=%20)](https://www.npmjs.com/package/seditor-react)                      |
 | `seditor-vue`          | Vue 3 bindings: `<Editor>`, `<Toolbar>`                | ~5 KB       | [![seditor-vue downloads](https://img.shields.io/npm/dm/seditor-vue.svg?label=%20)](https://www.npmjs.com/package/seditor-vue)                            |
+| `seditor-svelte`       | Svelte bindings: `<Editor>`, `<Toolbar>`               | ~5 KB       | [![seditor-svelte downloads](https://img.shields.io/npm/dm/seditor-svelte.svg?label=%20)](https://www.npmjs.com/package/seditor-svelte)                   |
 | `seditor-theme`        | Default Notion-like theme (CSS variables + dark mode)  | ~2 KB       | [![seditor-theme downloads](https://img.shields.io/npm/dm/seditor-theme.svg?label=%20)](https://www.npmjs.com/package/seditor-theme)                      |
 | `seditor-plugin-image` | Image plugin: upload, resize, drag-and-drop, alignment | ~4 KB       | [![seditor-plugin-image downloads](https://img.shields.io/npm/dm/seditor-plugin-image.svg?label=%20)](https://www.npmjs.com/package/seditor-plugin-image) |
 

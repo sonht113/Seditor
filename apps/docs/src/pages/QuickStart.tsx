@@ -7,6 +7,9 @@ const REACT_INSTALL = `npm install seditor-react seditor-theme
 const VUE_INSTALL = `npm install seditor-vue seditor-theme
 # peer deps: vue, lexical`;
 
+const SVELTE_INSTALL = `npm install seditor-svelte seditor-theme
+# peer deps: svelte, lexical`;
+
 const REACT_QUICK = `import { Editor, Toolbar } from "seditor-react";
 import "seditor-theme/index.css";
 import "seditor-theme/dark.css";
@@ -30,6 +33,16 @@ import "seditor-theme/dark.css";
     <Toolbar />
   </Editor>
 </template>`;
+
+const SVELTE_QUICK = `<script>
+  import { Editor, Toolbar } from "seditor-svelte";
+  import "seditor-theme/index.css";
+  import "seditor-theme/dark.css";
+</script>
+
+<Editor config={{ html: "<p>Hello <b>Seditor</b></p>" }}>
+  <Toolbar />
+</Editor>`;
 
 const REACT_IMPERATIVE = `import { useState } from "react";
 import { Editor, Toolbar, useEditor } from "seditor-react";
@@ -75,6 +88,24 @@ function SaveButton() {
   </Editor>
 </template>`;
 
+const SVELTE_IMPERATIVE = `<script>
+  import { Editor, Toolbar, useEditor } from "seditor-svelte";
+  import type { SeditorInstance } from "seditor-core";
+  import "seditor-theme/index.css";
+
+  let instance = null;
+
+  function SaveButton() {
+    const inst = useEditor();
+    const save = () => console.log(inst.getHTML());
+    return { save };
+  }
+</script>
+
+<Editor config={{ placeholder: "Start writing..." }} on:ready={(e) => (instance = e.detail)}>
+  <Toolbar />
+</Editor>`;
+
 function TabButton({
   active,
   onClick,
@@ -99,7 +130,9 @@ function TabButton({
 }
 
 export function QuickStart() {
-  const [framework, setFramework] = useState<"react" | "vue">("react");
+  const [framework, setFramework] = useState<"react" | "vue" | "svelte">(
+    "react",
+  );
 
   return (
     <div className="docs-prose">
@@ -118,11 +151,23 @@ export function QuickStart() {
         >
           Vue 3
         </TabButton>
+        <TabButton
+          active={framework === "svelte"}
+          onClick={() => setFramework("svelte")}
+        >
+          Svelte
+        </TabButton>
       </div>
 
       <h2>Install</h2>
       <CodeBlock
-        code={framework === "react" ? REACT_INSTALL : VUE_INSTALL}
+        code={
+          framework === "react"
+            ? REACT_INSTALL
+            : framework === "vue"
+              ? VUE_INSTALL
+              : SVELTE_INSTALL
+        }
         lang="bash"
         filename="terminal"
       />
@@ -132,8 +177,10 @@ export function QuickStart() {
           <>
             <code>react</code>, <code>react-dom</code>,{" "}
           </>
-        ) : (
+        ) : framework === "vue" ? (
           <code>vue</code>
+        ) : (
+          <code>svelte</code>
         )}{" "}
         <code>lexical</code>.
       </p>
@@ -144,9 +191,23 @@ export function QuickStart() {
         the theme CSS. That's all you need for a fully functional editor.
       </p>
       <CodeBlock
-        code={framework === "react" ? REACT_QUICK : VUE_QUICK}
-        lang={framework === "react" ? "tsx" : "vue"}
-        filename={framework === "react" ? "App.tsx" : "App.vue"}
+        code={
+          framework === "react"
+            ? REACT_QUICK
+            : framework === "vue"
+              ? VUE_QUICK
+              : SVELTE_QUICK
+        }
+        lang={
+          framework === "react" ? "tsx" : framework === "vue" ? "vue" : "svelte"
+        }
+        filename={
+          framework === "react"
+            ? "App.tsx"
+            : framework === "vue"
+              ? "App.vue"
+              : "App.svelte"
+        }
       />
 
       <blockquote className="border-l-4 border-brand-400 pl-4 my-6 text-[var(--docs-text-muted)] italic">
@@ -166,9 +227,23 @@ export function QuickStart() {
         <code>&lt;Editor&gt;</code> subtree.
       </p>
       <CodeBlock
-        code={framework === "react" ? REACT_IMPERATIVE : VUE_IMPERATIVE}
-        lang={framework === "react" ? "tsx" : "vue"}
-        filename={framework === "react" ? "App.tsx" : "App.vue"}
+        code={
+          framework === "react"
+            ? REACT_IMPERATIVE
+            : framework === "vue"
+              ? VUE_IMPERATIVE
+              : SVELTE_IMPERATIVE
+        }
+        lang={
+          framework === "react" ? "tsx" : framework === "vue" ? "vue" : "svelte"
+        }
+        filename={
+          framework === "react"
+            ? "App.tsx"
+            : framework === "vue"
+              ? "App.vue"
+              : "App.svelte"
+        }
       />
 
       <h2>Next steps</h2>
@@ -188,10 +263,19 @@ export function QuickStart() {
           Read the{" "}
           <a
             href={
-              framework === "react" ? "/Seditor/react-api" : "/Seditor/vue-api"
+              framework === "react"
+                ? "/Seditor/react-api"
+                : framework === "vue"
+                  ? "/Seditor/vue-api"
+                  : "/Seditor/svelte-api"
             }
           >
-            {framework === "react" ? "React" : "Vue"} API reference
+            {framework === "react"
+              ? "React"
+              : framework === "vue"
+                ? "Vue"
+                : "Svelte"}{" "}
+            API reference
           </a>{" "}
           for the full component props and events.
         </li>

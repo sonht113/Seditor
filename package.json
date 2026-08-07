@@ -62,6 +62,17 @@
         "vue",
         "seditor-core"
       ]
+    },
+    {
+      "name": "seditor-svelte",
+      "path": "packages/svelte/dist/index.js",
+      "limit": "10 KB",
+      "gzip": true,
+      "ignore": [
+        "lexical",
+        "svelte",
+        "seditor-core"
+      ]
     }
   ],
   "scripts": {

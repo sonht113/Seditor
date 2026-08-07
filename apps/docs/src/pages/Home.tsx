@@ -42,7 +42,7 @@ const FEATURES = [
   },
   {
     title: "Framework-agnostic core",
-    desc: "Official React and Vue 3 bindings, or build your own.",
+    desc: "Official React, Vue 3 and Svelte bindings, or build your own.",
     icon: (
       <svg
         width="20"
@@ -135,6 +135,11 @@ const PACKAGES = [
   {
     name: "seditor-vue",
     desc: "Vue 3 bindings: <Editor>, <Toolbar>, useEditor()",
+    size: "~6 KB",
+  },
+  {
+    name: "seditor-svelte",
+    desc: "Svelte bindings: <Editor>, <Toolbar>, useEditor()",
     size: "~6 KB",
   },
   {
