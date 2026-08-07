@@ -53,36 +53,36 @@ const html = ref("<p>Hello</p>");
 
 ## Props
 
-| Prop                  | Type                        | Default       | Description                                          |
-| --------------------- | --------------------------- | ------------- | ---------------------------------------------------- |
-| `modelValue`          | `string`                    | —             | Controlled content via `v-model` (HTML or JSON).    |
-| `defaultValue`        | `string`                    | —             | Initial content (uncontrolled).                      |
-| `config`              | `SeditorConfig`             | —             | Initial-only config (plugins, theme, namespace).     |
-| `valueFormat`         | `"html" \| "json"`          | `"html"`      | Serialization format for `v-model`/`change`.        |
-| `onChangeDebounceMs`  | `number`                    | `0`           | Debounce delay for `change`/`update:modelValue`.    |
-| `editable`            | `boolean`                   | `true`        | Controlled editable state (reactive).                |
-| `placeholder`         | `string`                    | —             | Placeholder text (reactive).                        |
-| `name`                | `string`                    | —             | Form field name (renders hidden input).              |
-| `id`                  | `string`                    | —             | id for the contentEditable root.                     |
-| `ariaLabel`           | `string`                    | —             | A11y label.                                          |
-| `ariaLabelledBy`      | `string`                    | —             | id of labelling element.                             |
-| `ariaDescribedBy`     | `string`                    | —             | id of describing element.                            |
-| `spellCheck`          | `boolean`                    | —             | Spell-check on the root.                             |
-| `autoFocus`           | `boolean`                   | —             | Focus on mount.                                      |
-| `tabIndex`            | `number`                    | —             | Tab order.                                           |
-| `className`           | `string`                    | `"se-editor"` | Wrapper class.                                       |
+| Prop                 | Type               | Default       | Description                                      |
+| -------------------- | ------------------ | ------------- | ------------------------------------------------ |
+| `modelValue`         | `string`           | —             | Controlled content via `v-model` (HTML or JSON). |
+| `defaultValue`       | `string`           | —             | Initial content (uncontrolled).                  |
+| `config`             | `SeditorConfig`    | —             | Initial-only config (plugins, theme, namespace). |
+| `valueFormat`        | `"html" \| "json"` | `"html"`      | Serialization format for `v-model`/`change`.     |
+| `onChangeDebounceMs` | `number`           | `0`           | Debounce delay for `change`/`update:modelValue`. |
+| `editable`           | `boolean`          | `true`        | Controlled editable state (reactive).            |
+| `placeholder`        | `string`           | —             | Placeholder text (reactive).                     |
+| `name`               | `string`           | —             | Form field name (renders hidden input).          |
+| `id`                 | `string`           | —             | id for the contentEditable root.                 |
+| `ariaLabel`          | `string`           | —             | A11y label.                                      |
+| `ariaLabelledBy`     | `string`           | —             | id of labelling element.                         |
+| `ariaDescribedBy`    | `string`           | —             | id of describing element.                        |
+| `spellCheck`         | `boolean`          | —             | Spell-check on the root.                         |
+| `autoFocus`          | `boolean`          | —             | Focus on mount.                                  |
+| `tabIndex`           | `number`           | —             | Tab order.                                       |
+| `className`          | `string`           | `"se-editor"` | Wrapper class.                                   |
 
 ## Events
 
-| Event               | Payload                              | Description                          |
-| ------------------- | ------------------------------------ | ------------------------------------ |
-| `update:modelValue` | `(value, instance)`                  | v-model sync.                        |
-| `change`            | `(value, instance)`                  | Fired on each content change.        |
-| `ready`             | `(instance)`                         | Called once after mount.             |
-| `focus`             | `(event, instance)`                  | Focus lifecycle.                     |
-| `blur`              | `(event, instance)`                  | Blur lifecycle.                      |
-| `error`             | `(error, instance)`                  | Lexical error handler.               |
-| `editableChange`     | `(editable)`                         | Fired when editable changes.         |
+| Event               | Payload             | Description                   |
+| ------------------- | ------------------- | ----------------------------- |
+| `update:modelValue` | `(value, instance)` | v-model sync.                 |
+| `change`            | `(value, instance)` | Fired on each content change. |
+| `ready`             | `(instance)`        | Called once after mount.      |
+| `focus`             | `(event, instance)` | Focus lifecycle.              |
+| `blur`              | `(event, instance)` | Blur lifecycle.               |
+| `error`             | `(error, instance)` | Lexical error handler.        |
+| `editableChange`    | `(editable)`        | Fired when editable changes.  |
 
 ## License
 

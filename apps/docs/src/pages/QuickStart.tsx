@@ -153,23 +153,14 @@ export function QuickStart() {
         <strong>Note:</strong> The <code>config</code> prop is read once on
         mount. To update content after mount, use the imperative API (
         <code>instance.setHTML()</code>, <code>instance.commands.*</code>) via
-        the{" "}
-        {framework === "react" ? (
-          <code>onReady</code>
-        ) : (
-          <code>@ready</code>
-        )}{" "}
+        the {framework === "react" ? <code>onReady</code> : <code>@ready</code>}{" "}
         event.
       </blockquote>
 
       <h2>Imperative API</h2>
       <p>
         Use the{" "}
-        {framework === "react" ? (
-          <code>onReady</code>
-        ) : (
-          <code>@ready</code>
-        )}{" "}
+        {framework === "react" ? <code>onReady</code> : <code>@ready</code>}{" "}
         callback to get the <code>SeditorInstance</code>, or the{" "}
         <code>useEditor()</code> composable inside an{" "}
         <code>&lt;Editor&gt;</code> subtree.
@@ -183,9 +174,8 @@ export function QuickStart() {
       <h2>Next steps</h2>
       <ul>
         <li>
-          Read the{" "}
-          <a href="/Seditor/core-api">Core API reference</a> for the full
-          command list.
+          Read the <a href="/Seditor/core-api">Core API reference</a> for the
+          full command list.
         </li>
         <li>
           Learn about <a href="/Seditor/theming">theming</a> and CSS variables.
@@ -196,7 +186,11 @@ export function QuickStart() {
         </li>
         <li>
           Read the{" "}
-          <a href={framework === "react" ? "/Seditor/react-api" : "/Seditor/vue-api"}>
+          <a
+            href={
+              framework === "react" ? "/Seditor/react-api" : "/Seditor/vue-api"
+            }
+          >
             {framework === "react" ? "React" : "Vue"} API reference
           </a>{" "}
           for the full component props and events.

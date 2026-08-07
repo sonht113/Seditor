@@ -495,7 +495,9 @@ describe("Editor lifecycle and state", () => {
 
   it("updates placeholder when prop changes", async () => {
     const wrapper = mountEditor({ props: { placeholder: "First" } });
-    expect(document.querySelector(".se-placeholder")?.textContent).toBe("First");
+    expect(document.querySelector(".se-placeholder")?.textContent).toBe(
+      "First",
+    );
     await wrapper.setProps({ placeholder: "Second" });
     await tick();
     expect(document.querySelector(".se-placeholder")?.textContent).toBe(
@@ -630,9 +632,7 @@ describe("Editor backward compat", () => {
 
   it("still works with config.html only", () => {
     mountEditor({ props: { config: { html: "<p>Legacy</p>" } } });
-    expect(document.querySelector(".se-root")?.textContent).toContain(
-      "Legacy",
-    );
+    expect(document.querySelector(".se-root")?.textContent).toContain("Legacy");
   });
 });
 

@@ -82,7 +82,9 @@ const imagePlugin = createImagePlugin({ uploadHandler: demoUploadHandler });
       </div>
       <div style="display: flex; gap: 8px">
         <button class="theme-toggle" @click="toggleMode">
-          {{ controlled ? "↺ Switch to Uncontrolled" : "→ Switch to Controlled" }}
+          {{
+            controlled ? "↺ Switch to Uncontrolled" : "→ Switch to Controlled"
+          }}
         </button>
         <button class="theme-toggle" @click="toggleDark">
           {{ dark ? "☀ Light" : "☾ Dark" }}

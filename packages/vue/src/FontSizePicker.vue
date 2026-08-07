@@ -103,7 +103,9 @@ function sampleStyle(value: string | null): Record<string, string> {
           font-size="13"
           font-weight="600"
           fill="currentColor"
-        >A</text>
+        >
+          A
+        </text>
         <text
           x="13"
           y="13"
@@ -111,7 +113,9 @@ function sampleStyle(value: string | null): Record<string, string> {
           font-size="9"
           font-weight="600"
           fill="currentColor"
-        >A</text>
+        >
+          A
+        </text>
       </svg>
     </button>
     <div v-if="open" class="se-fontsize-picker-dropdown" role="menu">

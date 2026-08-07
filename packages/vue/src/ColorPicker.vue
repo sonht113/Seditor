@@ -165,7 +165,9 @@ function swatchStyle(value: string | null): Record<string, string> {
           font-size="13"
           font-weight="600"
           fill="currentColor"
-        >A</text>
+        >
+          A
+        </text>
         <rect
           x="2"
           y="14"
@@ -195,7 +197,9 @@ function swatchStyle(value: string | null): Record<string, string> {
           font-size="8"
           font-weight="600"
           :fill="activeColor ? '#fff' : 'currentColor'"
-        >ab</text>
+        >
+          ab
+        </text>
       </svg>
     </button>
     <div v-if="open" class="se-color-picker-dropdown" role="menu">

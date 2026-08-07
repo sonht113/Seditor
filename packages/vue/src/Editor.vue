@@ -179,18 +179,16 @@ onMounted(() => {
   editor.setEditable(props.editable ?? props.config?.editable ?? true);
   emit("ready", instance);
 
-  const unregisterUpdate = editor.registerUpdateListener(
-    ({ editorState }) => {
-      editorState.read(() => {
-        isEmpty.value = $getRoot().getTextContent() === "";
-      });
-      if (isSettingFromProp.value) return;
-      const next = readValue(instance, props.valueFormat);
-      lastInternalValue.value = next;
-      hiddenValue.value = next;
-      fireOnChange(next);
-    },
-  );
+  const unregisterUpdate = editor.registerUpdateListener(({ editorState }) => {
+    editorState.read(() => {
+      isEmpty.value = $getRoot().getTextContent() === "";
+    });
+    if (isSettingFromProp.value) return;
+    const next = readValue(instance, props.valueFormat);
+    lastInternalValue.value = next;
+    hiddenValue.value = next;
+    fireOnChange(next);
+  });
 
   const unregisterEditable = editor.registerEditableListener((next) => {
     editableState.value = next;
@@ -207,15 +205,13 @@ onMounted(() => {
   root.addEventListener("focus", handleFocus, true);
   root.addEventListener("blur", handleBlur, true);
 
-  cleanupFns.push(
-    () => {
-      unregisterUpdate();
-      unregisterEditable();
-      root.removeEventListener("focus", handleFocus, true);
-      root.removeEventListener("blur", handleBlur, true);
-      editor.setRootElement(null);
-    },
-  );
+  cleanupFns.push(() => {
+    unregisterUpdate();
+    unregisterEditable();
+    root.removeEventListener("focus", handleFocus, true);
+    root.removeEventListener("blur", handleBlur, true);
+    editor.setRootElement(null);
+  });
 });
 
 onBeforeUnmount(() => {

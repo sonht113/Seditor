@@ -246,9 +246,9 @@ export function VueAPI() {
       <p>
         The main component. Creates a <code>SeditorInstance</code> from the{" "}
         <code>config</code> prop on mount and provides it via Vue{" "}
-        <code>provide</code>/<code>inject</code>. Supports both uncontrolled (via{" "}
-        <code>config.html</code> or <code>defaultValue</code>) and controlled
-        (via <code>v-model</code>) usage.
+        <code>provide</code>/<code>inject</code>. Supports both uncontrolled
+        (via <code>config.html</code> or <code>defaultValue</code>) and
+        controlled (via <code>v-model</code>) usage.
       </p>
       <CodeBlock code={BASIC_CODE} lang="vue" filename="App.vue" />
 
