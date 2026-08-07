@@ -2,13 +2,12 @@
 
 > A beautiful, lightweight, framework-agnostic rich text editor built on [Lexical](https://lexical.dev). 100% MIT.
 
-[![CI](https://github.com/seditor/seditor/actions/workflows/ci.yml/badge.svg)](https://github.com/seditor/seditor/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/seditor-react.svg)](https://www.npmjs.com/package/seditor-react)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Seditor is a Notion-like, easy-to-configure rich text editor. The core is
-framework-agnostic (TypeScript, no React), with first-class React bindings and
-a default theme. Vue and Svelte bindings are planned.
+framework-agnostic (TypeScript, no React), with first-class React and Vue
+bindings and a default theme. Svelte bindings are planned.
 
 ## Why Seditor?
 
@@ -49,12 +48,13 @@ export function App() {
 
 ## Packages
 
-| Package                | Description                                            | Size (gzip) |
-| ---------------------- | ------------------------------------------------------ | ----------- |
-| `seditor-core`         | Framework-agnostic core (Lexical wrapper + commands)   | ~35 KB      |
-| `seditor-react`        | React bindings: `<Editor>`, `<Toolbar>`, `useEditor()` | ~5 KB       |
-| `seditor-theme`        | Default Notion-like theme (CSS variables + dark mode)  | ~2 KB       |
-| `seditor-plugin-image` | Image plugin: upload, resize, drag-and-drop, alignment | ~4 KB       |
+| Package                | Description                                            | Size (gzip) | Monthly downloads |
+| ---------------------- | ------------------------------------------------------ | ----------- | ----------------- |
+| `seditor-core`         | Framework-agnostic core (Lexical wrapper + commands)   | ~35 KB      | [![seditor-core downloads](https://img.shields.io/npm/dm/seditor-core.svg?label=%20)](https://www.npmjs.com/package/seditor-core) |
+| `seditor-react`        | React bindings: `<Editor>`, `<Toolbar>`, `useEditor()` | ~5 KB       | [![seditor-react downloads](https://img.shields.io/npm/dm/seditor-react.svg?label=%20)](https://www.npmjs.com/package/seditor-react) |
+| `seditor-vue`          | Vue 3 bindings: `<Editor>`, `<Toolbar>`                | ~5 KB       | [![seditor-vue downloads](https://img.shields.io/npm/dm/seditor-vue.svg?label=%20)](https://www.npmjs.com/package/seditor-vue) |
+| `seditor-theme`        | Default Notion-like theme (CSS variables + dark mode)  | ~2 KB       | [![seditor-theme downloads](https://img.shields.io/npm/dm/seditor-theme.svg?label=%20)](https://www.npmjs.com/package/seditor-theme) |
+| `seditor-plugin-image` | Image plugin: upload, resize, drag-and-drop, alignment | ~4 KB       | [![seditor-plugin-image downloads](https://img.shields.io/npm/dm/seditor-plugin-image.svg?label=%20)](https://www.npmjs.com/package/seditor-plugin-image) |
 
 ## Core API
 
