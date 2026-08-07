@@ -78,6 +78,16 @@ const minimalItems: ToolbarItem[] = [
   </Editor>
 </template>`;
 
+const EXCLUDE_TOOLBAR_CODE = `<script setup lang="ts">
+import { Editor, Toolbar } from "seditor-vue";
+</script>
+
+<template>
+  <Editor :config="{ placeholder: 'Start writing...' }">
+    <Toolbar :exclude="['underline', 'strikethrough', 'redo']" />
+  </Editor>
+</template>`;
+
 const EDITOR_PROPS = [
   {
     prop: "modelValue",
@@ -221,6 +231,12 @@ const TOOLBAR_PROPS = [
     type: "ToolbarItem[]",
     desc: "Custom toolbar items. Omit to use defaults + plugin items.",
     default: "defaultToolbarItems",
+  },
+  {
+    prop: "exclude",
+    type: "string[]",
+    desc: "Ids of toolbar items to hide. Works with both default and custom items.",
+    default: "—",
   },
   {
     prop: "className",
@@ -369,6 +385,12 @@ export function VueAPI() {
         <code>ToolbarItem[]</code>) to the <code>items</code> prop.
       </p>
       <CodeBlock code={CUSTOM_TOOLBAR_CODE} lang="vue" filename="App.vue" />
+
+      <h2>Hide toolbar items</h2>
+      <p>
+        Pass an array of item <code>id</code>s to the <code>exclude</code> prop to hide them. This keeps the default items and plugin items intact.
+      </p>
+      <CodeBlock code={EXCLUDE_TOOLBAR_CODE} lang="vue" filename="App.vue" />
 
       <h2>Exports</h2>
       <table>

@@ -1,6 +1,7 @@
 export { createSeditor } from "./createSeditor";
 export { defaultTheme, mergeTheme } from "./theme";
 export { getMvpNodes } from "./nodes";
+export { filterToolbarItems } from "./toolbar";
 export {
   toggleBold,
   toggleItalic,

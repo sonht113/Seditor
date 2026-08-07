@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onBeforeUnmount } from "vue";
 import { CAN_REDO_COMMAND, CAN_UNDO_COMMAND } from "lexical";
-import { SE_OPEN_IMAGE_COMMAND, SE_OPEN_LINK_COMMAND } from "seditor-core";
+import { SE_OPEN_IMAGE_COMMAND, SE_OPEN_LINK_COMMAND, filterToolbarItems } from "seditor-core";
 import type { ToolbarItem } from "seditor-core";
 import { useEditor } from "./useEditor";
 import { defaultToolbarItems } from "./defaultToolbar";
@@ -11,6 +11,7 @@ import FontSizePicker from "./FontSizePicker.vue";
 const props = withDefaults(
   defineProps<{
     items?: ToolbarItem[];
+    exclude?: string[];
     className?: string;
   }>(),
   { className: "se-toolbar" },
@@ -23,8 +24,11 @@ const force = () => {
   tick.value++;
 };
 
-const allItems = computed(
-  () => props.items ?? [...defaultToolbarItems, ...instance.toolbarItems],
+const allItems = computed(() =>
+  filterToolbarItems(
+    props.items ?? [...defaultToolbarItems, ...instance.toolbarItems],
+    props.exclude,
+  ),
 );
 
 function handleClick(item: ToolbarItem): void {
