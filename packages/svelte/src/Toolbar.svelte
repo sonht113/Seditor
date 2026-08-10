@@ -31,6 +31,11 @@
     exclude,
   );
 
+  $: itemState = (item: ToolbarItem, t: typeof tick) => ({
+    active: t > -1 && (item.isActive?.(instance) ?? false),
+    enabled: t > -1 && (item.enable?.(instance) ?? true),
+  });
+
   function handleClick(item: ToolbarItem): void {
     if (item.command === "setLink") {
       instance.editor.dispatchCommand(SE_OPEN_LINK_COMMAND, undefined);
@@ -76,6 +81,10 @@
     }
   }
 
+  function onButtonDown(event: MouseEvent): void {
+    event.preventDefault();
+  }
+
   const unregisterUpdate = instance.editor.registerUpdateListener(() =>
     force(),
   );
@@ -101,19 +110,9 @@
     unregisterUndo();
     unregisterRedo();
   });
-
-  function isActive(item: ToolbarItem): boolean {
-    void tick;
-    return item.isActive?.(instance) ?? false;
-  }
-
-  function isEnabled(item: ToolbarItem): boolean {
-    void tick;
-    return item.enable?.(instance) ?? true;
-  }
 </script>
 
-<div class={className}>
+<div class={className} role="toolbar">
   {#each allItems as item (item.id)}
     {#if item.separator}
       <span class="se-toolbar-separator" />
@@ -124,18 +123,18 @@
     {:else}
       <button
         type="button"
-        class="se-toolbar-item"
-        class:active={isActive(item)}
-        disabled={!isEnabled(item)}
+        class="se-toolbar-button{itemState(item, tick).active ? ' se-toolbar-button-active' : ''}"
         title={item.label}
         aria-label={item.label}
+        aria-pressed={itemState(item, tick).active}
+        disabled={!itemState(item, tick).enabled}
+        on:mousedown={onButtonDown}
         on:click={() => handleClick(item)}
       >
         {#if item.icon}
-          <span class="se-toolbar-icon">{@html item.icon}</span>
-        {/if}
-        {#if !item.icon}
-          <span>{item.label}</span>
+          {@html item.icon}
+        {:else}
+          {item.label}
         {/if}
       </button>
     {/if}

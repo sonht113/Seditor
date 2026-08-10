@@ -78,12 +78,9 @@
   $: colors = kind === "text" ? TEXT_COLORS : BG_COLORS;
   $: label = kind === "text" ? "Text color" : "Background color";
 
-  $: activeColor = (() => {
-    void tick;
-    const pending =
-      kind === "text" ? getPendingTextColor() : getPendingBgColor();
-    return pending ?? "";
-  })();
+  $: activeColor = tick > -1 ? (kind === "text" ? getPendingTextColor() : getPendingBgColor()) ?? "" : "";
+
+  $: buttonClass = `se-toolbar-button se-color-picker-button${activeColor ? " se-color-picker-active" : ""}`;
 
   function handleSelect(value: string | null): void {
     if (kind === "text") {
@@ -122,43 +119,80 @@
   onDestroy(() => {
     document.removeEventListener("mousedown", onDocumentMouseDown);
   });
+
+  function swatchStyle(value: string | null): string {
+    if (value === null) {
+      return "background-image: linear-gradient(135deg, transparent 43%, #e03e3e 43%, #e03e3e 57%, transparent 57%)";
+    }
+    return `background-color: ${value}`;
+  }
 </script>
 
 <div bind:this={rootRef} class="se-color-picker">
   <button
     type="button"
-    class="se-toolbar-item"
+    class={buttonClass}
     title={label}
     aria-label={label}
     on:click={toggleOpen}
   >
-    <span class="se-toolbar-icon">
-      <svg
-        viewBox="0 0 16 16"
-        width="16"
-        height="16"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M4 3h6M7 3v10M5 13h4" />
+    {#if kind === "text"}
+      <svg viewBox="0 0 18 18" width="18" height="18">
+        <text
+          x="9"
+          y="12"
+          text-anchor="middle"
+          font-size="13"
+          font-weight="600"
+          fill="currentColor"
+        >A</text>
+        <rect
+          x="2"
+          y="14"
+          width="14"
+          height="2.5"
+          rx="1"
+          fill={activeColor || "currentColor"}
+          opacity={activeColor ? 1 : 0.3}
+        />
       </svg>
-    </span>
+    {:else}
+      <svg viewBox="0 0 18 18" width="18" height="18">
+        <rect
+          x="2"
+          y="3"
+          width="14"
+          height="11"
+          rx="2"
+          fill={activeColor || "none"}
+          stroke="currentColor"
+          stroke-width="1"
+          opacity={activeColor ? 1 : 0.4}
+        />
+        <text
+          x="9"
+          y="11"
+          text-anchor="middle"
+          font-size="8"
+          font-weight="600"
+          fill={activeColor ? "#fff" : "currentColor"}
+        >ab</text>
+      </svg>
+    {/if}
   </button>
   {#if open}
-    <div class="se-color-picker-dropdown">
+    <div class="se-color-picker-dropdown" role="menu">
       {#each colors as color (color.label)}
         <button
           type="button"
-          class="se-color-swatch"
-          class:active={activeColor === color.value}
+          class="se-color-picker-swatch"
           title={color.label}
           aria-label={color.label}
-          style="background-color: {color.value ?? 'transparent'}"
           on:click={() => handleSelect(color.value)}
-        />
+        >
+          <span class="se-color-picker-color" style={swatchStyle(color.value)} />
+          <span class="se-color-picker-label">{color.label}</span>
+        </button>
       {/each}
     </div>
   {/if}
