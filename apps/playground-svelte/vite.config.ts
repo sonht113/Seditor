@@ -8,6 +8,9 @@ export default defineConfig({
       preprocess: vitePreprocess(),
     }),
   ],
+  resolve: {
+    conditions: ["svelte"],
+  },
   server: {
     port: 5175,
   },
