@@ -112,9 +112,9 @@ export function SvelteAPI() {
 
       <h2>Vite setup</h2>
       <p>
-        Add <code>"svelte"</code> to your Vite <code>resolve.conditions</code> so the
-        package ships raw <code>.svelte</code> source files and the consumer
-        compiles them with its own Svelte runtime:
+        Add <code>"svelte"</code> to your Vite <code>resolve.conditions</code>{" "}
+        so the package ships raw <code>.svelte</code> source files and the
+        consumer compiles them with its own Svelte runtime:
       </p>
       <CodeBlock
         code={`resolve: {
