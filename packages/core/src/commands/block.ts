@@ -6,7 +6,11 @@ import {
   type ElementNode,
   type LexicalEditor,
 } from "lexical";
-import { $createHeadingNode, type HeadingTagType } from "@lexical/rich-text";
+import {
+  $createHeadingNode,
+  $isHeadingNode,
+  type HeadingTagType,
+} from "@lexical/rich-text";
 import { $isListItemNode } from "@lexical/list";
 import { $setBlocksType } from "@lexical/selection";
 import type { AlignType, HeadingTag } from "../types";
@@ -16,7 +20,26 @@ export function toggleHeading(editor: LexicalEditor, tag: HeadingTag): void {
     const selection = $getSelection();
     if (selection === null) return;
     const tagType = tag as HeadingTagType;
-    $setBlocksType(selection, () => $createHeadingNode(tagType));
+
+    const nodes = selection.getNodes();
+    const firstNode =
+      nodes[0] ??
+      ($isRangeSelection(selection) ? selection.anchor.getNode() : null);
+    if (firstNode === null) {
+      $setBlocksType(selection, () => $createHeadingNode(tagType));
+      return;
+    }
+    const topLevel = firstNode.getTopLevelElement();
+    const isSameHeading =
+      topLevel !== null &&
+      $isHeadingNode(topLevel) &&
+      topLevel.getTag() === tagType;
+
+    if (isSameHeading) {
+      $setBlocksType(selection, () => $createParagraphNode());
+    } else {
+      $setBlocksType(selection, () => $createHeadingNode(tagType));
+    }
   });
 }
 

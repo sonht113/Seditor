@@ -142,6 +142,29 @@ describe("commands", () => {
     expect(() => toggleHeading(instance.editor, "h1")).not.toThrow();
   });
 
+  it("toggleHeading converts paragraph to heading and back", () => {
+    const instance = seedEditor("<p>Text</p>");
+    const editor = instance.editor;
+
+    editor.update(() => {
+      const root = $getRoot();
+      const textNode = root.getFirstDescendant();
+      if (textNode && $isTextNode(textNode)) {
+        const sel = $createRangeSelection();
+        sel.anchor.set(textNode.getKey(), 0, "text");
+        sel.focus.set(textNode.getKey(), 2, "text");
+        $setSelection(sel);
+      }
+    });
+
+    toggleHeading(editor, "h1");
+    expect(getHTML(editor).toLowerCase()).toContain('class="se-h1"');
+
+    toggleHeading(editor, "h1");
+    expect(getHTML(editor).toLowerCase()).toContain('class="se-paragraph"');
+    expect(getHTML(editor).toLowerCase()).not.toContain('class="se-h1"');
+  });
+
   it("setParagraph does not throw without selection", () => {
     const instance = seedEditor("<h1>Title</h1>");
     expect(() => setParagraph(instance.editor)).not.toThrow();
