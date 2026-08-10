@@ -140,7 +140,8 @@ export function SvelteAPI() {
 
       <h2>Hide toolbar items</h2>
       <p>
-        Pass an array of item <code>id</code>s to the <code>exclude</code> prop to hide them. This keeps the default items and plugin items intact.
+        Pass an array of item <code>id</code>s to the <code>exclude</code> prop
+        to hide them. This keeps the default items and plugin items intact.
       </p>
       <CodeBlock
         code={EXCLUDE_TOOLBAR_CODE}
