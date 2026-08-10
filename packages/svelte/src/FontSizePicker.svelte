@@ -36,11 +36,9 @@
     { label: "64", value: "64px" },
   ];
 
-  $: activeSize = (() => {
-    void tick;
-    const pending = getPendingFontSize();
-    return pending ?? "";
-  })();
+  $: activeSize = tick > -1 ? getPendingFontSize() ?? "" : "";
+
+  $: buttonClass = `se-toolbar-button se-fontsize-picker-button${activeSize ? " se-fontsize-picker-active" : ""}`;
 
   function handleSelect(value: string | null): void {
     if (value === null) {
@@ -71,41 +69,53 @@
   onDestroy(() => {
     document.removeEventListener("mousedown", onDocumentMouseDown);
   });
+
+  function sampleStyle(value: string | null): string {
+    if (value) return `font-size: ${value}`;
+    return "";
+  }
 </script>
 
-<div bind:this={rootRef} class="se-font-size-picker">
+<div bind:this={rootRef} class="se-fontsize-picker">
   <button
     type="button"
-    class="se-toolbar-item"
+    class={buttonClass}
     title="Font size"
     aria-label="Font size"
     on:click={toggleOpen}
   >
-    <span class="se-toolbar-icon">
-      <svg
-        viewBox="0 0 16 16"
-        width="16"
-        height="16"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M4 3h8M8 3v10M6 13h4" />
-      </svg>
-    </span>
+    <svg viewBox="0 0 18 18" width="18" height="18">
+      <text
+        x="5"
+        y="13"
+        text-anchor="middle"
+        font-size="13"
+        font-weight="600"
+        fill="currentColor"
+      >A</text>
+      <text
+        x="13"
+        y="13"
+        text-anchor="middle"
+        font-size="9"
+        font-weight="600"
+        fill="currentColor"
+      >A</text>
+    </svg>
   </button>
   {#if open}
-    <div class="se-font-size-picker-dropdown">
+    <div class="se-fontsize-picker-dropdown" role="menu">
       {#each FONT_SIZES as size (size.label)}
         <button
           type="button"
-          class="se-font-size-option"
-          class:active={activeSize === size.value}
+          class="se-fontsize-picker-option"
+          title={size.label}
+          aria-label={size.label}
           on:click={() => handleSelect(size.value)}
         >
-          {size.label}
+          <span class="se-fontsize-picker-sample" style={sampleStyle(size.value)}>
+            {size.label}
+          </span>
         </button>
       {/each}
     </div>
