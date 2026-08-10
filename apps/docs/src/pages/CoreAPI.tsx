@@ -33,7 +33,10 @@ const COMMANDS = [
     cmd: "toggleBold / toggleItalic / toggleUnderline / toggleStrikethrough",
     desc: "Inline text formats",
   },
-  { cmd: "toggleHeading(tag)", desc: 'tag: "h1" | "h2" | "h3"' },
+  {
+    cmd: "toggleHeading(tag)",
+    desc: 'tag: "h1" | "h2" | "h3" — toggles back to paragraph when applied twice',
+  },
   { cmd: "setParagraph()", desc: "Convert block to paragraph" },
   { cmd: "toggleBulletList() / toggleNumberedList()", desc: "Lists" },
   { cmd: "setLink(url) / unsetLink()", desc: "Links" },

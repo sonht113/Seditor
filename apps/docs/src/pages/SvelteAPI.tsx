@@ -110,6 +110,20 @@ export function SvelteAPI() {
         Peer dependencies: <code>svelte</code>, <code>lexical</code>.
       </p>
 
+      <h2>Vite setup</h2>
+      <p>
+        Add <code>"svelte"</code> to your Vite <code>resolve.conditions</code>{" "}
+        so the package ships raw <code>.svelte</code> source files and the
+        consumer compiles them with its own Svelte runtime:
+      </p>
+      <CodeBlock
+        code={`resolve: {
+  conditions: ["svelte"]
+}`}
+        lang="ts"
+        filename="vite.config.ts"
+      />
+
       <h2>Basic usage</h2>
       <CodeBlock code={BASIC_CODE} lang="svelte" filename="App.svelte" />
 
