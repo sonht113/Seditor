@@ -11,7 +11,13 @@ export default defineConfig({
       fileName: (format) => (format === "es" ? "index.js" : "index.cjs"),
     },
     rollupOptions: {
-      external: ["vue", "lexical", "seditor-core"],
+      external: [
+        "vue",
+        "lexical",
+        "@lexical/table",
+        "seditor-core",
+        "seditor-plugin-table",
+      ],
     },
     sourcemap: true,
   },

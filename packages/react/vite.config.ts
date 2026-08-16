@@ -16,6 +16,7 @@ export default defineConfig({
         "react-dom",
         "react/jsx-runtime",
         "lexical",
+        "@lexical/table",
         "seditor-core",
         "seditor-plugin-table",
       ],
