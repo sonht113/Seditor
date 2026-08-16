@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { CAN_REDO_COMMAND, CAN_UNDO_COMMAND } from "lexical";
-import { SE_OPEN_IMAGE_COMMAND, SE_OPEN_LINK_COMMAND } from "seditor-core";
+import {
+  SE_OPEN_IMAGE_COMMAND,
+  SE_OPEN_LINK_COMMAND,
+  SE_OPEN_TABLE_COMMAND,
+} from "seditor-core";
 import { useEditor } from "./Editor";
 import { defaultToolbarItems } from "./defaultToolbar";
 import { ColorPicker } from "./ColorPicker";
 import { FontSizePicker } from "./FontSizePicker";
+import { TableBorderPicker } from "./TableBorderPicker";
 import { filterToolbarItems } from "seditor-core";
 import type { ToolbarItem } from "seditor-core";
 
@@ -66,6 +71,11 @@ export function Toolbar({ items, exclude, className }: ToolbarProps) {
       force((n) => n + 1);
       return;
     }
+    if (item.command === "openTableDialog") {
+      instance.editor.dispatchCommand(SE_OPEN_TABLE_COMMAND, undefined);
+      force((n) => n + 1);
+      return;
+    }
     if (item.command === "toggleHeading") {
       const tag = item.id === "h1" ? "h1" : item.id === "h2" ? "h2" : "h3";
       instance.commands.toggleHeading(tag);
@@ -103,6 +113,9 @@ export function Toolbar({ items, exclude, className }: ToolbarProps) {
         }
         if (item.command === "fontSize") {
           return <FontSizePicker key={item.id} />;
+        }
+        if (item.command === "openTableBorder") {
+          return <TableBorderPicker key={item.id} item={item} />;
         }
         const active = item.isActive?.(instance) ?? false;
         const enabled = item.enable?.(instance) ?? true;

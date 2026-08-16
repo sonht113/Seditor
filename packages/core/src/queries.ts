@@ -157,6 +157,54 @@ export function getActiveAlign(editor: LexicalEditor): AlignType | null {
   });
 }
 
+/**
+ * Returns true when the current selection is inside a table cell. Works for
+ * both range selections (caret in a cell) and table (cell) selections.
+ */
+export function isInTable(editor: LexicalEditor): boolean {
+  return read(editor, () => {
+    const selection = $getSelection();
+    if (selection === null) return false;
+    const nodes = selection.getNodes();
+    if ($isRangeSelection(selection) && nodes.length === 0) {
+      nodes.push(selection.anchor.getNode(), selection.focus.getNode());
+    }
+    if (nodes.length === 0) return false;
+    for (const node of nodes) {
+      const cell = findAncestor(
+        node,
+        (n) => $isElementNode(n) && n.getType() === "tablecell",
+      );
+      if (cell) return true;
+    }
+    return false;
+  });
+}
+
+/**
+ * Returns true when the row containing the current selection is a header row.
+ */
+export function isTableHeaderRowActive(editor: LexicalEditor): boolean {
+  return read(editor, () => {
+    const selection = $getSelection();
+    if (selection === null) return false;
+    const nodes = selection.getNodes();
+    for (const node of nodes) {
+      const cell = findAncestor(
+        node,
+        (n) => $isElementNode(n) && n.getType() === "tablecell",
+      );
+      if (cell && $isElementNode(cell)) {
+        const headerState = (cell as unknown as { __headerState?: number })
+          .__headerState;
+        // TableCellHeaderStates.ROW === 1
+        if ((headerState ?? 0) & 1) return true;
+      }
+    }
+    return false;
+  });
+}
+
 function findAncestor(
   node: LexicalNode,
   predicate: (n: LexicalNode | null | undefined) => boolean,

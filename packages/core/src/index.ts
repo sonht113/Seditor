@@ -32,7 +32,12 @@ export {
 } from "./commands";
 export { getHTML, getJSON, setHTML, setJSON } from "./serialization";
 export { registerShortcuts, SE_OPEN_LINK_COMMAND } from "./shortcuts";
-export { SE_OPEN_IMAGE_COMMAND, SE_SET_ALIGN_COMMAND } from "./pluginCommands";
+export {
+  SE_OPEN_IMAGE_COMMAND,
+  SE_OPEN_TABLE_COMMAND,
+  SE_OPEN_TABLE_BORDER_COMMAND,
+  SE_SET_ALIGN_COMMAND,
+} from "./pluginCommands";
 export {
   isTextFormatActive,
   isHeadingActive,
@@ -45,6 +50,8 @@ export {
   getActiveAlign,
   getActiveFontSize,
   getActiveImageAlign,
+  isInTable,
+  isTableHeaderRowActive,
 } from "./queries";
 export type {
   SeditorConfig,

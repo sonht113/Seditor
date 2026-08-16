@@ -7,13 +7,15 @@
   import {
     SE_OPEN_IMAGE_COMMAND,
     SE_OPEN_LINK_COMMAND,
+    SE_OPEN_TABLE_COMMAND,
     filterToolbarItems,
   } from "seditor-core";
   import type { ToolbarItem } from "seditor-core";
   import { useEditor } from "./context";
   import { defaultToolbarItems } from "./defaultToolbar";
   import ColorPicker from "./ColorPicker.svelte";
-  import FontSizePicker from "./FontSizePicker.svelte";
+import FontSizePicker from "./FontSizePicker.svelte";
+import TableBorderPicker from "./TableBorderPicker.svelte";
 
   export let items: ToolbarItem[] | undefined = undefined;
   export let exclude: string[] | undefined = undefined;
@@ -44,6 +46,11 @@
     }
     if (item.command === "openImageDialog") {
       instance.editor.dispatchCommand(SE_OPEN_IMAGE_COMMAND, undefined);
+      force();
+      return;
+    }
+    if (item.command === "openTableDialog") {
+      instance.editor.dispatchCommand(SE_OPEN_TABLE_COMMAND, undefined);
       force();
       return;
     }
@@ -118,6 +125,8 @@
       <span class="se-toolbar-separator" />
     {:else if item.command === "fontSize"}
       <FontSizePicker />
+    {:else if item.command === "openTableBorder"}
+      <TableBorderPicker {item} />
     {:else if item.command === "textColor" || item.command === "bgColor"}
       <ColorPicker kind={item.command === "textColor" ? "text" : "background"} />
     {:else}

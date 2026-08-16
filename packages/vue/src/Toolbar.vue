@@ -4,6 +4,7 @@ import { CAN_REDO_COMMAND, CAN_UNDO_COMMAND } from "lexical";
 import {
   SE_OPEN_IMAGE_COMMAND,
   SE_OPEN_LINK_COMMAND,
+  SE_OPEN_TABLE_COMMAND,
   filterToolbarItems,
 } from "seditor-core";
 import type { ToolbarItem } from "seditor-core";
@@ -11,6 +12,7 @@ import { useEditor } from "./useEditor";
 import { defaultToolbarItems } from "./defaultToolbar";
 import ColorPicker from "./ColorPicker.vue";
 import FontSizePicker from "./FontSizePicker.vue";
+import TableBorderPicker from "./TableBorderPicker.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -43,6 +45,11 @@ function handleClick(item: ToolbarItem): void {
   }
   if (item.command === "openImageDialog") {
     instance.editor.dispatchCommand(SE_OPEN_IMAGE_COMMAND, undefined);
+    force();
+    return;
+  }
+  if (item.command === "openTableDialog") {
+    instance.editor.dispatchCommand(SE_OPEN_TABLE_COMMAND, undefined);
     force();
     return;
   }
@@ -116,6 +123,10 @@ onBeforeUnmount(() => {
       <ColorPicker v-else-if="item.command === 'textColor'" kind="text" />
       <ColorPicker v-else-if="item.command === 'bgColor'" kind="background" />
       <FontSizePicker v-else-if="item.command === 'fontSize'" />
+      <TableBorderPicker
+        v-else-if="item.command === 'openTableBorder'"
+        :item="item"
+      />
       <button
         v-else
         type="button"

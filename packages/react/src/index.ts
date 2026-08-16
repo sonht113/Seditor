@@ -6,3 +6,6 @@ export { defaultToolbarItems } from "./defaultToolbar";
 export { LinkTooltip } from "./LinkTooltip";
 export { ColorPicker } from "./ColorPicker";
 export { FontSizePicker } from "./FontSizePicker";
+export { TableGridPicker } from "./TableGridPicker";
+export { TableActions } from "./TableActions";
+export { TableBorderPicker } from "./TableBorderPicker";
