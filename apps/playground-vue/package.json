@@ -15,6 +15,7 @@
     "seditor-vue": "workspace:*",
     "seditor-theme": "workspace:*",
     "seditor-plugin-image": "workspace:*",
+    "seditor-plugin-table": "workspace:*",
     "lexical": "^0.49.0",
     "vue": "^3.4.0"
   },

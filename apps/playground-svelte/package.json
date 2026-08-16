@@ -11,6 +11,7 @@
   "dependencies": {
     "seditor-core": "workspace:*",
     "seditor-plugin-image": "workspace:*",
+    "seditor-plugin-table": "workspace:*",
     "seditor-svelte": "workspace:*",
     "seditor-theme": "workspace:*"
   },
