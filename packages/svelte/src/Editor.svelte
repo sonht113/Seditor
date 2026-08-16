@@ -5,7 +5,9 @@
   import type { SeditorConfig, SeditorInstance } from "seditor-core";
   import { setEditor } from "./context";
   import type { EditorValueFormat } from "./types";
-  import LinkTooltip from "./LinkTooltip.svelte";
+import LinkTooltip from "./LinkTooltip.svelte";
+import TableGridPicker from "./TableGridPicker.svelte";
+import TableActions from "./TableActions.svelte";
 
   export let config: SeditorConfig | undefined = undefined;
   export let value: string | undefined = undefined;
@@ -228,4 +230,8 @@
     <input type="hidden" {name} value={hiddenValue} />
   {/if}
   <LinkTooltip />
+  {#if instance.toolbarItems.some((item) => item.id === "table")}
+    <TableGridPicker />
+    <TableActions />
+  {/if}
 </div>

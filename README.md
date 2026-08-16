@@ -48,14 +48,15 @@ export function App() {
 
 ## Packages
 
-| Package                | Description                                            | Size (gzip) | Monthly downloads                                                                                                                                         |
-| ---------------------- | ------------------------------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `seditor-core`         | Framework-agnostic core (Lexical wrapper + commands)   | ~35 KB      | [![seditor-core downloads](https://img.shields.io/npm/dm/seditor-core.svg?label=%20)](https://www.npmjs.com/package/seditor-core)                         |
-| `seditor-react`        | React bindings: `<Editor>`, `<Toolbar>`, `useEditor()` | ~5 KB       | [![seditor-react downloads](https://img.shields.io/npm/dm/seditor-react.svg?label=%20)](https://www.npmjs.com/package/seditor-react)                      |
-| `seditor-vue`          | Vue 3 bindings: `<Editor>`, `<Toolbar>`                | ~5 KB       | [![seditor-vue downloads](https://img.shields.io/npm/dm/seditor-vue.svg?label=%20)](https://www.npmjs.com/package/seditor-vue)                            |
-| `seditor-svelte`       | Svelte bindings: `<Editor>`, `<Toolbar>`               | ~5 KB       | [![seditor-svelte downloads](https://img.shields.io/npm/dm/seditor-svelte.svg?label=%20)](https://www.npmjs.com/package/seditor-svelte)                   |
-| `seditor-theme`        | Default Notion-like theme (CSS variables + dark mode)  | ~2 KB       | [![seditor-theme downloads](https://img.shields.io/npm/dm/seditor-theme.svg?label=%20)](https://www.npmjs.com/package/seditor-theme)                      |
-| `seditor-plugin-image` | Image plugin: upload, resize, drag-and-drop, alignment | ~4 KB       | [![seditor-plugin-image downloads](https://img.shields.io/npm/dm/seditor-plugin-image.svg?label=%20)](https://www.npmjs.com/package/seditor-plugin-image) |
+| Package                | Description                                             | Size (gzip) | Monthly downloads                                                                                                                                         |
+| ---------------------- | ------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `seditor-core`         | Framework-agnostic core (Lexical wrapper + commands)    | ~35 KB      | [![seditor-core downloads](https://img.shields.io/npm/dm/seditor-core.svg?label=%20)](https://www.npmjs.com/package/seditor-core)                         |
+| `seditor-react`        | React bindings: `<Editor>`, `<Toolbar>`, `useEditor()`  | ~5 KB       | [![seditor-react downloads](https://img.shields.io/npm/dm/seditor-react.svg?label=%20)](https://www.npmjs.com/package/seditor-react)                      |
+| `seditor-vue`          | Vue 3 bindings: `<Editor>`, `<Toolbar>`                 | ~5 KB       | [![seditor-vue downloads](https://img.shields.io/npm/dm/seditor-vue.svg?label=%20)](https://www.npmjs.com/package/seditor-vue)                            |
+| `seditor-svelte`       | Svelte bindings: `<Editor>`, `<Toolbar>`                | ~5 KB       | [![seditor-svelte downloads](https://img.shields.io/npm/dm/seditor-svelte.svg?label=%20)](https://www.npmjs.com/package/seditor-svelte)                   |
+| `seditor-theme`        | Default Notion-like theme (CSS variables + dark mode)   | ~2 KB       | [![seditor-theme downloads](https://img.shields.io/npm/dm/seditor-theme.svg?label=%20)](https://www.npmjs.com/package/seditor-theme)                      |
+| `seditor-plugin-image` | Image plugin: upload, resize, drag-and-drop, alignment  | ~4 KB       | [![seditor-plugin-image downloads](https://img.shields.io/npm/dm/seditor-plugin-image.svg?label=%20)](https://www.npmjs.com/package/seditor-plugin-image) |
+| `seditor-plugin-table` | Table insertion, selection, editing, resize and borders | ~3 KB       | —                                                                                                                                                         |
 
 ## Core API
 
@@ -106,6 +107,39 @@ const myPlugin: SeditorPlugin = {
   onInit: (editor) => {},
 };
 ```
+
+## Table Plugin
+
+Install the table plugin alongside a binding and the default theme:
+
+```bash
+npm install seditor-plugin-table
+```
+
+```tsx
+import { Editor, Toolbar } from "seditor-react";
+import { createTablePlugin } from "seditor-plugin-table";
+import "seditor-theme/index.css";
+
+<Editor
+  config={{
+    plugins: [
+      createTablePlugin({
+        defaultRowStriping: true,
+        scrollable: true,
+      }),
+    ],
+  }}
+>
+  <Toolbar />
+</Editor>;
+```
+
+The plugin supports cell selection, row and column operations, merge/unmerge,
+cell formatting, row/column/cell resizing, scrollable tables, frozen first row
+and column configuration, and independent outer/row/column border settings.
+See the [Table Plugin guide](/Seditor/table-plugin) for the complete API and
+framework notes.
 
 ## Theming
 

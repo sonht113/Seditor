@@ -23,6 +23,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
       { to: "/svelte-api", label: "Svelte API" },
       { to: "/theming", label: "Theming" },
       { to: "/image-plugin", label: "Image Plugin" },
+      { to: "/table-plugin", label: "Table Plugin" },
     ],
   },
 ];

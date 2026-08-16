@@ -13,6 +13,8 @@ import type { SeditorConfig, SeditorInstance } from "seditor-core";
 import { SEDITOR_KEY } from "./useEditor";
 import type { EditorValueFormat } from "./types";
 import LinkTooltip from "./LinkTooltip.vue";
+import TableGridPicker from "./TableGridPicker.vue";
+import TableActions from "./TableActions.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -305,5 +307,9 @@ watch(
     </div>
     <input v-if="name" type="hidden" :name="name" :value="hiddenValue" />
     <LinkTooltip />
+    <template v-if="instance.toolbarItems.some((item) => item.id === 'table')">
+      <TableGridPicker />
+      <TableActions />
+    </template>
   </div>
 </template>

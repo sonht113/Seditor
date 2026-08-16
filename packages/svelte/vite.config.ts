@@ -11,7 +11,13 @@ export default defineConfig({
       fileName: (format) => (format === "es" ? "index.js" : "index.cjs"),
     },
     rollupOptions: {
-      external: ["svelte", "lexical", "seditor-core"],
+      external: [
+        "svelte",
+        "lexical",
+        "@lexical/table",
+        "seditor-core",
+        "seditor-plugin-table",
+      ],
     },
     sourcemap: true,
   },

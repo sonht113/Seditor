@@ -4,10 +4,11 @@ import {
   createImagePlugin,
   type ImagePluginConfig,
 } from "seditor-plugin-image";
+import { createTablePlugin } from "seditor-plugin-table";
 import type { SeditorInstance } from "seditor-core";
 
 const INITIAL_HTML =
-  '<h1>Welcome to Seditor</h1><p>A beautiful, lightweight rich text editor built on <b>Lexical</b>.</p><h2>Features</h2><ul><li>Bold, italic, underline, strikethrough</li><li>Headings &amp; lists</li><li>Links &amp; undo/redo</li><li>Image upload, resize &amp; drag-and-drop</li><li>Alignment for text &amp; images</li><li>Font size, text &amp; background colors</li></ul><h2>Image demo</h2><p>Click the image below to select it, then drag the corner handles to resize. Drag the image to reposition it (copy). You can also drop image files from your desktop onto the editor. With an image (or text) selected, use the align buttons to set left/center/right alignment.</p><img src="https://picsum.photos/id/237/400/280" alt="Demo image" width="400" height="280"/><p>Try editing this text!</p>';
+  '<h1>Welcome to Seditor</h1><p>A beautiful, lightweight rich text editor built on <b>Lexical</b>.</p><h2>Features</h2><ul><li>Bold, italic, underline, strikethrough</li><li>Headings &amp; lists</li><li>Links &amp; undo/redo</li><li>Image upload, resize &amp; drag-and-drop</li><li>Alignment for text &amp; images</li><li>Font size, text &amp; background colors</li></ul><h2>Image demo</h2><p>Click the image below to select it, then drag the corner handles to resize. With an image selected, use the align buttons to set left/center/right alignment.</p><img src="https://picsum.photos/id/237/400/280" alt="Demo image" width="400" height="280"/><h2>Table demo</h2><p>Select cells, try right-click actions, resize cell edges, and use the border toolbar button.</p><table><tr><th>Feature</th><th>Status</th><th>Notes</th></tr><tr><td>Selection</td><td>Ready</td><td></td></tr><tr><td>Resize</td><td></td><td>Try empty cells</td></tr><tr><td>Border</td><td>Ready</td><td></td></tr></table><p>Try editing this text!</p>';
 
 const demoUploadHandler: ImagePluginConfig["uploadHandler"] = async (file) => {
   await new Promise((r) => setTimeout(r, 300));
@@ -71,7 +72,13 @@ export function DemoEditor() {
         config={{
           html: INITIAL_HTML,
           placeholder: "Start writing...",
-          plugins: [createImagePlugin({ uploadHandler: demoUploadHandler })],
+          plugins: [
+            createImagePlugin({ uploadHandler: demoUploadHandler }),
+            createTablePlugin({
+              defaultRowStriping: true,
+              scrollable: true,
+            }),
+          ],
         }}
         onReady={setInstance}
       >

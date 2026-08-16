@@ -9,6 +9,7 @@ import { VueAPI } from "./pages/VueAPI";
 import { SvelteAPI } from "./pages/SvelteAPI";
 import { Theming } from "./pages/Theming";
 import { ImagePlugin } from "./pages/ImagePlugin";
+import { TablePlugin } from "./pages/TablePlugin";
 import { Demo } from "./pages/Demo";
 
 export default function App() {
@@ -53,6 +54,7 @@ export default function App() {
               <Route path="/svelte-api" element={<SvelteAPI />} />
               <Route path="/theming" element={<Theming />} />
               <Route path="/image-plugin" element={<ImagePlugin />} />
+              <Route path="/table-plugin" element={<TablePlugin />} />
               <Route path="/demo" element={<Demo />} />
             </Routes>
           </div>

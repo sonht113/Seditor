@@ -7,8 +7,8 @@ export function Demo() {
       <p>
         This demo uses the <strong>published npm packages</strong> (not the
         workspace source) to verify everything works end-to-end. Try the
-        toolbar, drag-and-drop images, resize them, toggle dark mode, and
-        inspect the HTML/JSON output.
+        toolbar, table selection and border controls, drag-and-drop images,
+        resize them, toggle dark mode, and inspect the HTML/JSON output.
       </p>
 
       <DemoEditor />
@@ -42,6 +42,10 @@ export function Demo() {
           <strong>Images</strong> — click the image button to upload, or
           drag-and-drop from desktop. Click an image to resize via corner
           handles.
+        </li>
+        <li>
+          <strong>Tables</strong> — select cells, use row/column actions, resize
+          cells, and configure outer, row or column borders from the toolbar.
         </li>
         <li>
           <strong>Undo/Redo</strong> — history controls in the toolbar.

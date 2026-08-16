@@ -1,6 +1,6 @@
 {
   "name": "seditor-core",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Framework-agnostic core of Seditor, built on Lexical.",
   "license": "MIT",
   "type": "module",

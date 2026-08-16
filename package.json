@@ -33,7 +33,9 @@
         "lexical",
         "react",
         "react-dom",
-        "seditor-core"
+        "seditor-core",
+        "seditor-plugin-table",
+        "@lexical/table"
       ]
     },
     {
@@ -55,23 +57,27 @@
     {
       "name": "seditor-vue",
       "path": "packages/vue/dist/index.js",
-      "limit": "10 KB",
+      "limit": "11 KB",
       "gzip": true,
       "ignore": [
         "lexical",
         "vue",
-        "seditor-core"
+        "seditor-core",
+        "seditor-plugin-table",
+        "@lexical/table"
       ]
     },
     {
       "name": "seditor-svelte",
       "path": "packages/svelte/dist/index.js",
-      "limit": "11 KB",
+      "limit": "19 KB",
       "gzip": true,
       "ignore": [
         "lexical",
         "svelte",
-        "seditor-core"
+        "seditor-core",
+        "seditor-plugin-table",
+        "@lexical/table"
       ]
     }
   ],

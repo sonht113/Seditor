@@ -6,5 +6,11 @@
   "linked": [],
   "access": "public",
   "baseBranch": "master",
-  "ignore": ["seditor-docs", "seditor-playground", "seditor-playground-vue"]
+  "ignore": [
+    "seditor-docs",
+    "seditor-playground",
+    "seditor-playground-vue",
+    "playground-svelte",
+    "seditor-plugin-image"
+  ]
 }

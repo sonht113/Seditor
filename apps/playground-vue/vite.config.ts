@@ -20,6 +20,10 @@ export default defineConfig({
         __dirname,
         "../../packages/plugin-image/src/index.ts",
       ),
+      "seditor-plugin-table": resolve(
+        __dirname,
+        "../../packages/plugin-table/src/index.ts",
+      ),
     },
   },
   server: {

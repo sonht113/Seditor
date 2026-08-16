@@ -6,3 +6,6 @@ export { defaultToolbarItems } from "./defaultToolbar";
 export { default as LinkTooltip } from "./LinkTooltip.vue";
 export { default as ColorPicker } from "./ColorPicker.vue";
 export { default as FontSizePicker } from "./FontSizePicker.vue";
+export { default as TableGridPicker } from "./TableGridPicker.vue";
+export { default as TableActions } from "./TableActions.vue";
+export { default as TableBorderPicker } from "./TableBorderPicker.vue";

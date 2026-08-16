@@ -5,12 +5,17 @@ import {
   createImagePlugin,
   type ImagePluginConfig,
 } from "seditor-plugin-image";
+import { createTablePlugin } from "seditor-plugin-table";
 import type { SeditorInstance } from "seditor-core";
 import "seditor-theme/index.css";
 import "seditor-theme/dark.css";
 
 const INITIAL_HTML =
   '<h1>Welcome to Seditor</h1><p>A beautiful, lightweight rich text editor built on <b>Lexical</b>.</p><h2>Features</h2><ul><li>Bold, italic, underline, strikethrough</li><li>Headings &amp; lists</li><li>Links &amp; undo/redo</li><li>Image upload, resize &amp; drag-and-drop</li>    <li>Alignment for text &amp; images</li><li>Font size, text &amp; background colors</li></ul><h2>Image demo</h2><p>Click the image below to select it, then drag the corner handles to resize. Drag the image to reposition it (copy). You can also drop image files from your desktop onto the editor. With an image (or text) selected, use the align buttons to set left/center/right alignment.</p><img src="https://picsum.photos/id/237/400/280" alt="Demo image" width="400" height="280"/><p>Try editing this text!</p>';
+
+const TABLE_HTML =
+  "<h2>Table demo</h2><p>Select cells, try right-click actions, resize cell edges, and use the border toolbar button.</p><table><tr><th>Feature</th><th>Status</th><th>Notes</th></tr><tr><td>Selection</td><td>Ready</td><td></td></tr><tr><td>Resize</td><td></td><td>Try empty cells</td></tr><tr><td>Border</td><td>Ready</td><td></td></tr></table>";
+const DEMO_HTML = `${INITIAL_HTML}${TABLE_HTML}`;
 
 const demoUploadHandler: ImagePluginConfig["uploadHandler"] = async (file) => {
   console.info(
@@ -34,7 +39,7 @@ const demoUploadHandler: ImagePluginConfig["uploadHandler"] = async (file) => {
 
 const instance = ref<SeditorInstance | null>(null);
 const controlled = ref(false);
-const html = ref(INITIAL_HTML);
+const html = ref(DEMO_HTML);
 const dark = ref(false);
 const outputHtml = ref("");
 const outputJson = ref("");
@@ -68,6 +73,11 @@ function showJson(): void {
 }
 
 const imagePlugin = createImagePlugin({ uploadHandler: demoUploadHandler });
+const tablePlugin = createTablePlugin({
+  defaultRowStriping: true,
+  scrollable: true,
+});
+const plugins = [imagePlugin, tablePlugin];
 </script>
 
 <template>
@@ -97,7 +107,7 @@ const imagePlugin = createImagePlugin({ uploadHandler: demoUploadHandler });
         key="controlled"
         v-model="html"
         placeholder="Start writing..."
-        :config="{ plugins: [imagePlugin] }"
+        :config="{ plugins }"
         @ready="onReady"
       >
         <Toolbar />
@@ -106,9 +116,9 @@ const imagePlugin = createImagePlugin({ uploadHandler: demoUploadHandler });
         v-else
         key="uncontrolled"
         :config="{
-          html: INITIAL_HTML,
+          html: DEMO_HTML,
           placeholder: 'Start writing...',
-          plugins: [imagePlugin],
+          plugins,
         }"
         @change="(v: string) => (html = v)"
         @ready="onReady"

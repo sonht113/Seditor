@@ -12,6 +12,8 @@ import { $getRoot } from "lexical";
 import { createSeditor } from "seditor-core";
 import type { SeditorConfig, SeditorInstance } from "seditor-core";
 import { LinkTooltip } from "./LinkTooltip";
+import { TableGridPicker } from "./TableGridPicker";
+import { TableActions } from "./TableActions";
 
 const SeditorContext = createContext<SeditorInstance | null>(null);
 
@@ -435,6 +437,12 @@ export const Editor = forwardRef<SeditorInstance, EditorProps>(function Editor(
         </div>
         {name && <input type="hidden" name={name} value={hiddenValue} />}
         <LinkTooltip />
+        {instance.toolbarItems.some((item) => item.id === "table") && (
+          <>
+            <TableGridPicker />
+            <TableActions />
+          </>
+        )}
       </div>
     </SeditorContext.Provider>
   );

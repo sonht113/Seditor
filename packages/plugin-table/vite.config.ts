@@ -1,5 +1,4 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
 import { resolve } from "node:path";
 
@@ -11,20 +10,11 @@ export default defineConfig({
       fileName: (format) => (format === "es" ? "index.js" : "index.cjs"),
     },
     rollupOptions: {
-      external: [
-        "react",
-        "react-dom",
-        "react/jsx-runtime",
-        "lexical",
-        "@lexical/table",
-        "seditor-core",
-        "seditor-plugin-table",
-      ],
+      external: ["lexical", "@lexical/table", "seditor-core"],
     },
     sourcemap: true,
   },
   plugins: [
-    react(),
     dts({
       tsconfigPath: "./tsconfig.json",
       exclude: ["**/*.test.ts", "**/*.test.tsx"],
@@ -33,6 +23,5 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
-    setupFiles: ["./vitest.setup.ts"],
   },
 });
