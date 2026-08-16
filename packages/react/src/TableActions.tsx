@@ -166,8 +166,8 @@ export function TableActions() {
       setVerticalAlign(getActiveTableCellVerticalAlign(instance.editor));
       setTableAlign(getActiveTableAlignment(instance.editor));
       setIsStriped(isTableRowStripingActive(instance.editor));
-       setBorder(getActiveTableBorder(instance.editor));
-       setActiveTableKey(getActiveTableKey(instance.editor));
+      setBorder(getActiveTableBorder(instance.editor));
+      setActiveTableKey(getActiveTableKey(instance.editor));
     });
   }, [instance]);
 

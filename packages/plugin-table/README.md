@@ -38,15 +38,15 @@ export function App() {
 
 ## Configuration
 
-| Option | Description |
-| --- | --- |
-| `defaultColumns` | Default inserted column count. Defaults to `3`. |
-| `defaultRows` | Default inserted row count. Defaults to `3`. |
-| `defaultHeaders` | Header configuration for new tables. Defaults to a header row. |
-| `defaultRowStriping` | Enables alternating row styling for new tables. |
-| `scrollable` | Wraps wide tables in a horizontal scrolling container. |
-| `defaultFrozenRows` | Freezes the leading row when scrolling is enabled. |
-| `defaultFrozenColumns` | Freezes the leading column when scrolling is enabled. |
+| Option                 | Description                                                    |
+| ---------------------- | -------------------------------------------------------------- |
+| `defaultColumns`       | Default inserted column count. Defaults to `3`.                |
+| `defaultRows`          | Default inserted row count. Defaults to `3`.                   |
+| `defaultHeaders`       | Header configuration for new tables. Defaults to a header row. |
+| `defaultRowStriping`   | Enables alternating row styling for new tables.                |
+| `scrollable`           | Wraps wide tables in a horizontal scrolling container.         |
+| `defaultFrozenRows`    | Freezes the leading row when scrolling is enabled.             |
+| `defaultFrozenColumns` | Freezes the leading column when scrolling is enabled.          |
 
 ## Features
 

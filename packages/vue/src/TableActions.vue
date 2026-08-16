@@ -521,7 +521,9 @@ onBeforeUnmount(() => {
       <select
         id="se-table-border-style-vue"
         v-model="border.style"
-        @change="setTableBorder(instance.editor, border, activeTableKey ?? undefined)"
+        @change="
+          setTableBorder(instance.editor, border, activeTableKey ?? undefined)
+        "
       >
         <option value="solid">Solid</option>
         <option value="dashed">Dashed</option>
@@ -533,12 +535,16 @@ onBeforeUnmount(() => {
         v-model="border.color"
         type="color"
         aria-label="Table border color"
-        @change="setTableBorder(instance.editor, border, activeTableKey ?? undefined)"
+        @change="
+          setTableBorder(instance.editor, border, activeTableKey ?? undefined)
+        "
       />
       <select
         v-model.number="border.width"
         aria-label="Table border width"
-        @change="setTableBorder(instance.editor, border, activeTableKey ?? undefined)"
+        @change="
+          setTableBorder(instance.editor, border, activeTableKey ?? undefined)
+        "
       >
         <option v-for="width in [0, 1, 2, 3, 4]" :key="width" :value="width">
           {{ width }}px
